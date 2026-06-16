@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>湍河流域水利工程地理信息系统 | Tuan River Basin Hydraulic Heritage GIS</title>
+  <meta name="description" content="A bilingual web GIS of 2,000+ years of water-conservancy works in the Tuan River (湍河) basin — Dengzhou, Neixiang, Xinye, Henan, China. 湍河流域两千余年水利工程地理信息系统。" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <link rel="stylesheet" href="src/style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- ===================== TOP BAR ===================== -->
+    <header id="topbar">
+      <button id="sidebarToggle" class="icon-btn" title="Toggle panel" aria-label="Toggle panel">☰</button>
+      <div class="brand">
+        <h1 data-i18n="title">湍河流域水利工程地理信息系统</h1>
+        <span class="subtitle" data-i18n="subtitle">Tuan River Basin Hydraulic Heritage GIS · 春秋至今 2000+ 年</span>
+      </div>
+      <div class="topbar-controls">
+        <label class="field">
+          <span data-i18n="basemapLabel">底图</span>
+          <select id="basemap"></select>
+        </label>
+        <button id="langToggle" class="btn">EN</button>
+      </div>
+    </header>
+
+    <!-- ===================== MAIN ===================== -->
+    <div id="main">
+      <aside id="sidebar">
+        <section class="panel">
+          <h2 data-i18n="layersTitle">图层 Layers</h2>
+          <div id="layerControls"></div>
+        </section>
+
+        <section class="panel">
+          <h2 data-i18n="legendTitle">图例 Legend</h2>
+          <div id="legend"></div>
+          <p class="hint" data-i18n="legendHint">空心环=历史遗存（已废）；虚线=低可信度</p>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2 data-i18n="timelineTitle">历史时间线 Timeline</h2>
+            <input id="featureSearch" type="search" data-i18n-ph="searchPh" placeholder="搜索 / Search" />
+          </div>
+          <ul id="featureList"></ul>
+        </section>
+
+        <section class="panel about">
+          <h2 data-i18n="aboutTitle">关于 About</h2>
+          <p id="aboutText" data-i18n="aboutText"></p>
+          <p class="src-note"><a id="repoLink" href="https://github.com/alexmorerich/dengzhou-hydro" target="_blank" rel="noopener">GitHub ↗</a></p>
+        </section>
+      </aside>
+
+      <div id="map"></div>
+
+      <div id="loading" class="loading"><div class="spinner"></div><span data-i18n="loading">加载数据中… Loading…</span></div>
+    </div>
+
+    <!-- ===================== TIME BAR ===================== -->
+    <footer id="timebar">
+      <div id="dynastyChips" class="dynasty-chips"></div>
+      <div class="time-row">
+        <button id="playBtn" class="icon-btn" title="Play through time">▶</button>
+        <input type="range" id="timeSlider" min="-770" max="2026" value="2026" step="1" />
+        <div class="time-readout">
+          <strong id="yearLabel">2026</strong>
+          <span id="dynastyLabel"></span>
+        </div>
+        <button id="allErasBtn" class="btn small active" data-i18n="allEras">全部年代</button>
+      </div>
+    </footer>
+  </div>
+
+  <script src="src/config.js"></script>
+  <script src="src/i18n.js"></script>
+  <script src="src/app.js"></script>
+</body>
+</html>

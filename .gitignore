@@ -1,0 +1,20 @@
+# Playwright / browser test artifacts
+.playwright-mcp/
+*-test-*.png
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Local scratch
+/tmp/
+*.log

@@ -1,0 +1,428 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+build_data.py — assemble the GIS data layers for the Tuan River Basin Hydraulic GIS.
+湍河流域水利工程地理信息系统 —— 数据图层生成脚本
+
+Inputs (committed, reproducible):
+  - data/admin-boundaries.geojson         (geoBoundaries CHN ADM3, ODbL)
+  - data/sources/overpass-water.json      (trimmed OpenStreetMap Overpass extract, ODbL)
+  - the POINTS table below                 (historical + modern works, hand-compiled from
+                                            primary texts & government sources — see `source`)
+
+Outputs:
+  - data/hydraulic-structures.geojson      (point works & sites, historical → modern)
+  - data/osm-reservoir-surfaces.geojson    (reservoir water-surface polygons, from OSM)
+  - data/canals.geojson                    (named canals / transfer works, lines, from OSM)
+
+Schema (every feature): id, name_zh, name_en, category, era_start, era_end,
+  era_label_zh, era_label_en, builder_zh/en, description_zh/en, status_zh/en,
+  confidence (high|medium|low), source, source_url.
+Years are integers; negative = BCE. era_end = 2026 means "still in use".
+
+Run:  python3 scripts/build_data.py
+"""
+import json
+import os
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+def p(*a): return os.path.join(ROOT, *a)
+
+# --------------------------------------------------------------------------- #
+# Point features: historical works (Spring & Autumn → Ming) and modern works. #
+# Coordinates are [lon, lat] (WGS-84). Inferred historical coordinates are     #
+# seeded from the Dengzhou city anchor (32.68N, 112.08E) + recorded bearings;  #
+# `confidence` reflects locational certainty. See docs/history.md & data-sources.md.
+# --------------------------------------------------------------------------- #
+POINTS = [
+    # ===================== 春秋 / 战国  Spring & Autumn / Warring States =====================
+    {
+        "id": "chu-weir", "name_zh": "楚堰（楚堨）", "name_en": "Chu Weir (Chu terraced reservoir)",
+        "category": "weir", "lon": 111.90, "lat": 32.85,
+        "era_start": -650, "era_end": 1600, "era_label_zh": "春秋·楚国", "era_label_en": "Spring & Autumn · State of Chu",
+        "builder_zh": "楚国", "builder_en": "State of Chu",
+        "description_zh": "湍河上游最早的灌溉工程雏形。《水经注·湍水》载“楚堨，高下相承八重，周十里，方塘蓄水”，为八级跌水蓄水陂塘，灌田五百余顷，历元、明续修。",
+        "description_en": "The earliest known irrigation work on the upper Tuan. The Commentary on the Water Classic records eight stepped impoundments ~10 li in circumference; it watered 500+ qing and was repaired through the Yuan and Ming.",
+        "status_zh": "遗址（楚碣遗址）", "status_en": "Relict (Chu-weir site)",
+        "confidence": "medium", "source": "《水经注·湍水》; 张芳《中国古代灌溉工程技术史》",
+        "source_url": "https://zh.wikipedia.org/wiki/湍河",
+    },
+    {
+        "id": "chu-great-wall", "name_zh": "楚长城（方城）", "name_en": "Chu Great Wall (Fangcheng)",
+        "category": "site", "lon": 111.58, "lat": 32.62,
+        "era_start": -650, "era_end": -221, "era_label_zh": "春秋战国·楚国", "era_label_en": "Spring & Autumn–Warring States · Chu",
+        "builder_zh": "楚国", "builder_en": "State of Chu",
+        "description_zh": "中国最早的长城。其“方城以为城，汉水以为池”的方略以湍河等河流为天然城池（护城水系）。自内乡入邓州、跨湍河南下，邓州境内存约30公里。",
+        "description_en": "China's earliest 'Great Wall'. Its doctrine 'walls of Fangcheng, moats of the Han River' used the Tuan and other rivers as natural moats. A ~30 km segment survives in Dengzhou.",
+        "status_zh": "遗址", "status_en": "Relict",
+        "confidence": "medium", "source": "《括地志》; 河南省文物考古研究院",
+        "source_url": "https://zh.wikipedia.org/wiki/楚长城",
+    },
+    # ===================== 西汉 / 东汉  Han =====================
+    {
+        "id": "liumen-weir", "name_zh": "六门堤（六门堰·六门陂）", "name_en": "Six-Gate Weir (Liumen Weir / Reservoir)",
+        "category": "weir", "lon": 112.06, "lat": 32.685,
+        "era_start": -34, "era_end": 1644, "era_label_zh": "西汉·元帝", "era_label_en": "Western Han · Emperor Yuan",
+        "builder_zh": "召信臣", "builder_en": "Shao Xinchen (Governor of Nanyang)",
+        "description_zh": "湍河流域的核心古代水利工程，本系统的灵魂。南阳太守召信臣于建昭五年（前34年）断湍水筑穰西石堨，初开三石门；元始五年（公元5年）扩为六石门，故名“六门”。下结二十九陂，构成“长藤结瓜”灌溉网，溉穰、新野、涅阳等地五千余顷。西晋杜预（282年）大修，复二十九陂；明嘉靖三十三年（1554年）增至三十八陂十四堰；约明末淤废，历约1600年。今岔股路村北存渠首、韩凹村存渡槽残段，为邓州文物保护单位。",
+        "description_en": "The centerpiece of Tuan-valley water heritage. In 34 BCE the Nanyang governor Shao Xinchen dammed the Tuan west of Rang (old Dengzhou) with a stone weir of three gates; in AD 5 it was enlarged to six stone gates — hence 'Six Gate'. It fed a chain of ~29 ponds (a 'vine-and-melons' network) irrigating 5,000+ qing across three counties. Restored by Du Yu (Jin, AD 282) and rebuilt to 38 ponds + 14 weirs in 1554 (Ming); silted up by the late Ming after ~1,600 years of service. The canal head and a trough-canal section survive; a protected relic of Dengzhou.",
+        "status_zh": "遗址（市级文物保护单位）", "status_en": "Relict (municipal protected site)",
+        "confidence": "high", "source": "《水经注·湍水》; 《汉书·循吏传》; 邓州市文物记述",
+        "source_url": "https://zh.wikipedia.org/wiki/召信臣",
+    },
+    {
+        "id": "qianlu-reservoir", "name_zh": "钳卢陂", "name_en": "Qianlu Reservoir",
+        "category": "reservoir", "lon": 112.20, "lat": 32.40,
+        "era_start": -34, "era_end": 1700, "era_label_zh": "西汉·元帝", "era_label_en": "Western Han · Emperor Yuan",
+        "builder_zh": "召信臣", "builder_en": "Shao Xinchen",
+        "description_zh": "召信臣建于穰县东南六十里（今构林一带），“累石为堤，旁开六石门以节水势”。系六门陂系统中最大的陂塘，跨刁河（朝水）与湍河水系调水。今王堤至岗岔楼村存残堤约4.2公里，清代前期废。",
+        "description_en": "Built by Shao Xinchen ~30 km SSE of Rang (today's Goulin area): 'a dam of piled stone with six stone gates to regulate the flow.' The largest pond of the Six-Gate system, it transferred water between the Diao and Tuan basins. A ~4.2 km residual embankment survives; abandoned in the early Qing.",
+        "status_zh": "遗址（残堤）", "status_en": "Relict (residual embankment)",
+        "confidence": "high", "source": "《元和郡县志》; 《通典》; 张芳《中国古代灌溉工程技术史》",
+        "source_url": "https://zh.wikipedia.org/wiki/召信臣",
+    },
+    {
+        "id": "dengshi-reservoir", "name_zh": "邓氏陂", "name_en": "Dengshi Reservoir",
+        "category": "reservoir", "lon": 112.00, "lat": 32.66,
+        "era_start": -100, "era_end": 600, "era_label_zh": "汉", "era_label_en": "Han",
+        "builder_zh": "—", "builder_en": "—",
+        "description_zh": "《水经注·湍水》所载湍水之畔的汉代陂塘之一，位于古穰、邓一带，属六门陂周边灌溉陂塘群。",
+        "description_en": "A Han-era pond on the Tuan recorded in the Commentary on the Water Classic, within the cluster of irrigation ponds around the Six-Gate system.",
+        "status_zh": "已湮", "status_en": "Lost",
+        "confidence": "medium", "source": "《水经注·湍水》",
+        "source_url": "https://zh.wikipedia.org/wiki/湍河",
+    },
+    {
+        "id": "fanshi-reservoir", "name_zh": "樊氏陂", "name_en": "Fanshi Reservoir",
+        "category": "reservoir", "lon": 112.02, "lat": 32.52,
+        "era_start": -100, "era_end": 600, "era_label_zh": "汉", "era_label_en": "Han",
+        "builder_zh": "—", "builder_en": "—",
+        "description_zh": "《水经注》载于朝水（今刁河）之上的汉代陂塘，与钳卢陂同处刁河灌溉走廊。",
+        "description_en": "A Han-era pond on the Chao (today's Diao) River recorded in the Commentary on the Water Classic, in the same Diao-valley irrigation corridor as Qianlu Reservoir.",
+        "status_zh": "已湮", "status_en": "Lost",
+        "confidence": "medium", "source": "《水经注》",
+        "source_url": "https://zh.wikipedia.org/wiki/湍河",
+    },
+    {
+        "id": "xinye-reservoir", "name_zh": "新野陂", "name_en": "Xinye Reservoir",
+        "category": "reservoir", "lon": 112.34, "lat": 32.52,
+        "era_start": -100, "era_end": 600, "era_label_zh": "汉", "era_label_en": "Han",
+        "builder_zh": "—", "builder_en": "—",
+        "description_zh": "汉代新野县大型陂塘，“陂东西九里，南北十五里，陂水所溉，咸为良沃”，为新野盆地早期灌溉工程。",
+        "description_en": "A large Han-era reservoir in Xinye County — 'nine li east–west, fifteen li north–south; all the land it watered became rich and fertile' — an early irrigation work of the Xinye plain.",
+        "status_zh": "已湮", "status_en": "Lost",
+        "confidence": "medium", "source": "《水经注·淯水》",
+        "source_url": "https://zh.wikipedia.org/wiki/湍河",
+    },
+    {
+        "id": "grain-canal", "name_zh": "运粮河（曹操运粮渠）", "name_en": "Grain-Transport Canal (Cao Cao)",
+        "category": "canal", "lon": 112.10, "lat": 32.62,
+        "era_start": 208, "era_end": 400, "era_label_zh": "东汉末·建安", "era_label_en": "Late Han · Jian'an",
+        "builder_zh": "曹操军", "builder_en": "Cao Cao's army",
+        "description_zh": "建安十三年（208年）赤壁之战前后，曹操军于穰城（今邓州）南郊开凿的军用运粮渠，为汉末军事水运遗迹。",
+        "description_en": "A military grain-transport canal dug by Cao Cao's army south of Rang (today's Dengzhou) around the Red Cliffs campaign of AD 208 — a relic of late-Han military water transport.",
+        "status_zh": "遗迹", "status_en": "Relict",
+        "confidence": "low", "source": "邓州地方志",
+        "source_url": "https://zh.wikipedia.org/wiki/邓州市",
+    },
+    # ===================== 现代  Modern (PRC) =====================
+    {
+        "id": "tuanhe-aqueduct", "name_zh": "湍河渡槽（南水北调中线）", "name_en": "Tuanhe Aqueduct (S-to-N Diversion, Middle Route)",
+        "category": "diversion", "lon": 111.93, "lat": 32.86,
+        "era_start": 2014, "era_end": 2026, "era_label_zh": "现代", "era_label_en": "Modern (PRC)",
+        "builder_zh": "南水北调中线工程", "builder_en": "South–North Water Transfer, Middle Route",
+        "description_zh": "世界最大的U形输水渡槽，位于邓州十林镇与赵集镇之间，承南水北调中线总干渠跨越湍河。全长1030米，三槽并联，单跨40米共18跨，设计流量350立方米/秒，2014年建成通水。",
+        "description_en": "The world's largest U-shaped aqueduct, between Shilin and Zhaoji towns in Dengzhou, carrying the South-to-North Middle Route canal over the Tuan River. 1,030 m long, three parallel troughs, 18 spans of 40 m, design flow 350 m³/s; completed and in service 2014.",
+        "status_zh": "运行中", "status_en": "In service",
+        "confidence": "high", "source": "百度百科·南水北调湍河渡槽; 邓州市人民政府",
+        "source_url": "https://www.dengzhou.gov.cn/2015/07-26/1115583.html",
+    },
+    {
+        "id": "taocha-headworks", "name_zh": "陶岔渠首闸", "name_en": "Taocha Headworks Sluice",
+        "category": "sluice", "lon": 111.49, "lat": 32.68,
+        "era_start": 1974, "era_end": 2026, "era_label_zh": "现代", "era_label_en": "Modern (PRC)",
+        "builder_zh": "引丹/南水北调工程", "builder_en": "Yindan & S-to-N Diversion",
+        "description_zh": "位于邓州西缘、淅川九重镇陶岔，引丹灌区与南水北调中线的总进水口（流域水源边界）。高程约162米，闸宽逾百米，自丹江口水库引水入总干渠与引丹总干渠。",
+        "description_en": "At Taocha (Xichuan, on Dengzhou's western edge), the head intake of both the Yindan irrigation district and the South-to-North Middle Route. Crest ~162 m, gate >100 m wide; draws water from Danjiangkou Reservoir into the main canals.",
+        "status_zh": "运行中", "status_en": "In service",
+        "confidence": "medium", "source": "维基百科·陶岔渠首",
+        "source_url": "https://zh.wikipedia.org/wiki/陶岔渠首",
+    },
+    {
+        "id": "tuanhui-canal-head", "name_zh": "湍惠渠渠首", "name_en": "Tuanhui Canal Headworks",
+        "category": "sluice", "lon": 111.95, "lat": 32.84,
+        "era_start": 1942, "era_end": 2026, "era_label_zh": "民国—现代", "era_label_en": "Republic → Modern",
+        "builder_zh": "—", "builder_en": "—",
+        "description_zh": "近代湍河引水渠首，闸位于罗庄镇西一道约550米拦河堰左岸，1942年初建，1957—1984年间四次重修，自流灌溉约2500公顷并补给半坡水库。",
+        "description_en": "A modern Tuan River diversion. Its head sluice sits on the left bank of a ~550 m cross-river weir west of Luozhuang Town; first built 1942 and rebuilt four times (1957–1984). It gravity-irrigates ~2,500 ha and tops up Banpo Reservoir.",
+        "status_zh": "运行中", "status_en": "In service",
+        "confidence": "medium", "source": "百度百科·湍河",
+        "source_url": "https://baike.baidu.com/item/湍河/10310200",
+    },
+    {
+        "id": "dengzhou-rubber-dams", "name_zh": "邓州城区橡胶坝群", "name_en": "Dengzhou Urban Rubber-Dam Group",
+        "category": "rubber_dam", "lon": 112.085, "lat": 32.675,
+        "era_start": 2005, "era_end": 2026, "era_label_zh": "现代", "era_label_en": "Modern (PRC)",
+        "builder_zh": "邓州市", "builder_en": "Dengzhou City",
+        "description_zh": "邓州城区段湍河上的橡胶坝群（约4座），抬高水位形成连续城市水面与水景，是湍河国家湿地公园城区段的景观核心。",
+        "description_en": "A group of ~4 rubber dams on the urban reach of the Tuan in Dengzhou, raising the water level to form a continuous urban water surface — the landscape core of the wetland park's city reach.",
+        "status_zh": "运行中", "status_en": "In service",
+        "confidence": "medium", "source": "《林业经济管理》研究; 百度百科·湍河",
+        "source_url": "https://baike.baidu.com/item/湍河/10310200",
+    },
+    {
+        "id": "neixiang-rubber-dams", "name_zh": "内乡城区橡胶坝", "name_en": "Neixiang Urban Rubber Dams",
+        "category": "rubber_dam", "lon": 111.852, "lat": 33.045,
+        "era_start": 2010, "era_end": 2026, "era_label_zh": "现代", "era_label_en": "Modern (PRC)",
+        "builder_zh": "内乡县", "builder_en": "Neixiang County",
+        "description_zh": "湍河穿内乡县城段建橡胶坝两座，形成总长约2800米、宽约400米、水面约112万平方米的城市水域（菊潭公园一带）。",
+        "description_en": "Two rubber dams on the Tuan through Neixiang county town form an urban water body ~2,800 m long and ~400 m wide (~1.12 km²), around Jutan Park.",
+        "status_zh": "运行中", "status_en": "In service",
+        "confidence": "low", "source": "百度百科·湍河",
+        "source_url": "https://baike.baidu.com/item/湍河/10310200",
+    },
+    {
+        "id": "tuanhe-wetland-park", "name_zh": "湍河国家湿地公园", "name_en": "Tuanhe National Wetland Park",
+        "category": "wetland", "lon": 112.10, "lat": 32.72,
+        "era_start": 2014, "era_end": 2026, "era_label_zh": "现代", "era_label_en": "Modern (PRC)",
+        "builder_zh": "邓州市", "builder_en": "Dengzhou City",
+        "description_zh": "沿湍河自罗庄镇至南邓公路大桥以南的带状国家湿地公园，总面积约1699.7公顷，湿地率约90%，为重要鸟类栖息地。2014年获批国家级。",
+        "description_en": "A ribbon national wetland park along the Tuan from Luozhuang Town to south of the Nan-Deng highway bridge — ~1,699.7 ha, ~90% wetland, an important bird habitat; designated national-grade in 2014.",
+        "status_zh": "运行中", "status_en": "Active",
+        "confidence": "high", "source": "百度百科·河南邓州湍河国家湿地公园",
+        "source_url": "https://baike.baidu.com/item/河南邓州湍河国家湿地公园/16710096",
+    },
+    {
+        "id": "yindan-district", "name_zh": "引丹灌区", "name_en": "Yindan Irrigation District",
+        "category": "canal", "lon": 111.80, "lat": 32.56,
+        "era_start": 1974, "era_end": 2026, "era_label_zh": "现代", "era_label_en": "Modern (PRC)",
+        "builder_zh": "邓县及邻县十万民工", "builder_en": "~100,000 laborers of Deng & neighboring counties",
+        "description_zh": "邓州唯一的大型灌区。自丹江口水库经陶岔渠首引水，总干渠约8.9公里，1974年通水，灌溉邓州、新野农田，是流域现代灌溉的骨干。",
+        "description_en": "Dengzhou's only large irrigation district. Drawing from Danjiangkou via the Taocha headworks (main canal ~8.9 km, opened 1974), it irrigates farmland across Dengzhou and Xinye — the backbone of modern basin irrigation.",
+        "status_zh": "运行中", "status_en": "In service",
+        "confidence": "high", "source": "南阳市/邓州市水利记述",
+        "source_url": "https://zh.wikipedia.org/wiki/陶岔渠首",
+    },
+    {
+        "id": "damogang-reservoir", "name_zh": "打磨岗水库", "name_en": "Damogang Reservoir",
+        "category": "reservoir", "lon": 111.92, "lat": 33.20,
+        "era_start": 1981, "era_end": 2026, "era_label_zh": "现代", "era_label_en": "Modern (PRC)",
+        "builder_zh": "内乡县", "builder_en": "Neixiang County",
+        "description_zh": "内乡县中型水库，位于马山口镇默河中支，1981年建成，正常库容约1250万立方米，为打磨岗灌区水源。",
+        "description_en": "A medium reservoir in Neixiang on a middle branch of the Mo River at Mashankou Town; completed 1981, normal storage ~12.5 million m³ — the source of the Damogang irrigation district.",
+        "status_zh": "运行中", "status_en": "In service",
+        "confidence": "medium", "source": "维基百科·打磨岗水库; 灌排云",
+        "source_url": "https://zh.wikipedia.org/wiki/打磨岗水库",
+    },
+    {
+        "id": "yunluhu-reservoir", "name_zh": "云露湖水库", "name_en": "Yunluhu Reservoir",
+        "category": "reservoir", "lon": 111.935, "lat": 33.215,
+        "era_start": 2014, "era_end": 2026, "era_label_zh": "现代", "era_label_en": "Modern (PRC)",
+        "builder_zh": "内乡县", "builder_en": "Neixiang County",
+        "description_zh": "内乡县小型水库（烟水源工程，2014年建），总库容约983万立方米，与庵山、打磨岗水库“库库连通”，年向打磨岗灌区调水约1000万立方米。",
+        "description_en": "A small Neixiang reservoir (built 2014), total storage ~9.83 million m³, interconnected with Anshan and Damogang reservoirs and transferring ~10 million m³/yr to the Damogang district.",
+        "status_zh": "运行中", "status_en": "In service",
+        "confidence": "medium", "source": "灌排云·打磨岗灌区",
+        "source_url": "https://4g.dahe.cn/news/202408141800990",
+    },
+    {
+        "id": "zhanlonggang-reservoir", "name_zh": "斩龙岗水库", "name_en": "Zhanlonggang Reservoir",
+        "category": "reservoir", "lon": 111.85, "lat": 33.30,
+        "era_start": 1969, "era_end": 2026, "era_label_zh": "现代", "era_label_en": "Modern (PRC)",
+        "builder_zh": "内乡县", "builder_en": "Neixiang County",
+        "description_zh": "内乡县小型水库，位于赤眉镇弹琴河（湍河上游左岸支流），1969年建成，正常库容约730万立方米。",
+        "description_en": "A small Neixiang reservoir on the Tanqin River (a left-bank tributary of the upper Tuan) near Chimei Town; completed 1969, normal storage ~7.3 million m³.",
+        "status_zh": "运行中", "status_en": "In service",
+        "confidence": "medium", "source": "维基百科·斩龙岗水库",
+        "source_url": "https://zh.wikipedia.org/wiki/斩龙岗水库",
+    },
+    {
+        "id": "liushan-reservoir", "name_zh": "刘山水库", "name_en": "Liushan Reservoir",
+        "category": "reservoir", "lon": 111.87, "lat": 32.53,
+        "era_start": 1966, "era_end": 2026, "era_label_zh": "现代", "era_label_en": "Modern (PRC)",
+        "builder_zh": "邓州市", "builder_en": "Dengzhou City",
+        "description_zh": "邓州市中型水库，位于彭桥镇排子河支流，总库容约1019万立方米，承担防洪与灌溉。（建库年代为约估，位置以乡镇定位。）",
+        "description_en": "A medium Dengzhou reservoir on a tributary of the Paizi River at Pengqiao Town; total storage ~10.19 million m³, for flood control and irrigation. (Build year approximate; located by township.)",
+        "status_zh": "运行中", "status_en": "In service",
+        "confidence": "low", "source": "邓州市水库名录 (2026)",
+        "source_url": "https://www.dengzhou.gov.cn/2026/01-23/1381408.html",
+    },
+    {
+        "id": "banpo-reservoir", "name_zh": "半坡水库", "name_en": "Banpo Reservoir",
+        "category": "reservoir", "lon": 111.99, "lat": 32.82,
+        "era_start": 1958, "era_end": 2026, "era_label_zh": "现代", "era_label_en": "Modern (PRC)",
+        "builder_zh": "邓州市", "builder_en": "Dengzhou City",
+        "description_zh": "邓州市小一型水库，位于赵集镇、湍惠渠以东，总库容约715万立方米，由湍惠渠引湍河水补给。（建库年代为约估。）",
+        "description_en": "A small Dengzhou reservoir at Zhaoji Town, east of the Tuanhui Canal; total storage ~7.15 million m³, fed by Tuan River water via the Tuanhui Canal. (Build year approximate.)",
+        "status_zh": "运行中", "status_en": "In service",
+        "confidence": "low", "source": "邓州市水库名录 (2026)",
+        "source_url": "https://www.dengzhou.gov.cn/2026/01-23/1381408.html",
+    },
+    {
+        "id": "zhanggang-reservoir", "name_zh": "张岗水库", "name_en": "Zhanggang Reservoir",
+        "category": "reservoir", "lon": 111.92, "lat": 32.90,
+        "era_start": 1958, "era_end": 2026, "era_label_zh": "现代", "era_label_en": "Modern (PRC)",
+        "builder_zh": "邓州市", "builder_en": "Dengzhou City",
+        "description_zh": "邓州市小一型水库，位于十林镇湍河支流，总库容约681万立方米。（建库年代为约估，位置以乡镇定位。）",
+        "description_en": "A small Dengzhou reservoir on a Tuan tributary at Shilin Town; total storage ~6.81 million m³. (Build year approximate; located by township.)",
+        "status_zh": "运行中", "status_en": "In service",
+        "confidence": "low", "source": "邓州市水库名录 (2026)",
+        "source_url": "https://www.dengzhou.gov.cn/2026/01-23/1381408.html",
+    },
+    # ===================== 围堰  Cofferdam =====================
+    {
+        "id": "taocha-cofferdam", "name_zh": "陶岔渠首施工围堰", "name_en": "Taocha Headworks Construction Cofferdam",
+        "category": "cofferdam", "lon": 111.495, "lat": 32.685,
+        "era_start": 2009, "era_end": 2014, "era_label_zh": "现代（临时工程）", "era_label_en": "Modern (temporary works)",
+        "builder_zh": "南水北调工程", "builder_en": "S-to-N Diversion project",
+        "description_zh": "陶岔渠首改建期间为维持过流、保护基坑而修筑的纵向混凝土围堰（临时工程）。在湍河流域，“围堰/围堤”自古即为筑陂蓄水之施工方法——六门陂、钳卢陂皆以四周围堤壅水成库。",
+        "description_en": "A temporary longitudinal concrete cofferdam built during the Taocha headworks reconstruction to maintain flow and protect the excavation. In this basin, cofferdams/coffer-dikes have always been the *method* of impoundment — the Six-Gate and Qianlu reservoirs were both raised by encircling embankments.",
+        "status_zh": "已拆除（临时）", "status_en": "Removed (temporary)",
+        "confidence": "low", "source": "邓州市水利记述",
+        "source_url": "https://baike.baidu.com/item/陶岔渠首",
+    },
+]
+
+# Reservoir water-surface polygons to lift from OSM (osm id -> enriched attributes). #
+RES_SURFACES = {
+    "way/1330680367": {
+        "name_zh": "张沟水库", "name_en": "Zhanggou Reservoir", "era_start": 1958, "era_end": 2026,
+        "era_label_zh": "现代", "era_label_en": "Modern (PRC)", "confidence": "high",
+        "description_zh": "邓州市中型水库，位于高集乡，总库容约1266万立方米，由南阳引丹灌溉中心管理。（建库年代为约估。）",
+        "description_en": "A medium Dengzhou reservoir at Gaoji, total storage ~12.66 million m³, managed by the Nanyang Yindan irrigation centre. (Build year approximate.)",
+        "source": "邓州市水库名录 (2026); OpenStreetMap",
+        "source_url": "https://www.dengzhou.gov.cn/2026/01-23/1381408.html",
+    },
+    "way/962471008": {
+        "name_zh": "王营水库", "name_en": "Wangying Reservoir", "era_start": 1958, "era_end": 2026,
+        "era_label_zh": "现代", "era_label_en": "Modern (PRC)", "confidence": "medium",
+        "description_zh": "邓州市西北部小型水库（湍河流域），水面轮廓取自 OpenStreetMap。",
+        "description_en": "A small reservoir in north-western Dengzhou (Tuan basin); surface outline from OpenStreetMap.",
+        "source": "OpenStreetMap", "source_url": "https://www.openstreetmap.org/way/962471008",
+    },
+    "way/706687993": {
+        "name_zh": "滕庄水库", "name_en": "Tengzhuang Reservoir", "era_start": 1958, "era_end": 2026,
+        "era_label_zh": "现代", "era_label_en": "Modern (PRC)", "confidence": "medium",
+        "description_zh": "邓州市南部小型水库，水面轮廓取自 OpenStreetMap。",
+        "description_en": "A small reservoir in southern Dengzhou; surface outline from OpenStreetMap.",
+        "source": "OpenStreetMap", "source_url": "https://www.openstreetmap.org/way/706687993",
+    },
+}
+
+# Named canals / transfer works to lift from OSM (by name) -> enriched attributes. #
+CANALS = {
+    "南水北调中线工程总干渠": {
+        "name_en": "South-to-North Water Transfer, Middle Route (main canal)", "category": "diversion",
+        "era_start": 2014, "era_end": 2026, "era_label_zh": "现代", "era_label_en": "Modern (PRC)", "confidence": "high",
+        "description_zh": "南水北调中线总干渠，自丹江口水库北送，经邓州西部（流域内以湍河渡槽跨湍河）。",
+        "description_en": "The Middle Route main canal of the South-to-North Water Transfer, running north from Danjiangkou through western Dengzhou (crossing the Tuan on the Tuanhe Aqueduct).",
+        "source": "OpenStreetMap", "source_url": "https://www.openstreetmap.org/",
+    },
+    "南阳灌区引丹渠": {
+        "name_en": "Nanyang Yindan Canal", "category": "canal",
+        "era_start": 1974, "era_end": 2026, "era_label_zh": "现代", "era_label_en": "Modern (PRC)", "confidence": "high",
+        "description_zh": "引丹灌区干渠，自陶岔渠首引丹江口水库之水灌溉邓州、新野。",
+        "description_en": "A trunk canal of the Yindan district, carrying Danjiangkou water from Taocha to irrigate Dengzhou and Xinye.",
+        "source": "OpenStreetMap", "source_url": "https://www.openstreetmap.org/",
+    },
+    "清泉沟隧洞": {
+        "name_en": "Qingquangou Tunnel", "category": "canal",
+        "era_start": 1974, "era_end": 2026, "era_label_zh": "现代", "era_label_en": "Modern (PRC)", "confidence": "medium",
+        "description_zh": "引丹工程清泉沟输水隧洞，自丹江口水库西侧引水入引丹渠系。",
+        "description_en": "The Qingquangou conveyance tunnel of the Yindan works, drawing water from the western side of Danjiangkou Reservoir into the Yindan canal system.",
+        "source": "OpenStreetMap", "source_url": "https://www.openstreetmap.org/",
+    },
+    "腰兴渠": {
+        "name_en": "Yaoxing Canal", "category": "canal",
+        "era_start": 1958, "era_end": 2026, "era_label_zh": "现代", "era_label_en": "Modern (PRC)", "confidence": "medium",
+        "description_zh": "邓州东部地方灌渠。", "description_en": "A local irrigation canal in eastern Dengzhou.",
+        "source": "OpenStreetMap", "source_url": "https://www.openstreetmap.org/",
+    },
+}
+
+# --------------------------------------------------------------------------- #
+# Geometry helpers / point-in-polygon for the county filter.                   #
+# --------------------------------------------------------------------------- #
+def load_counties():
+    admin = json.load(open(p("data", "admin-boundaries.geojson"), encoding="utf-8"))
+    return [(f["properties"]["name_zh"], f["geometry"]["coordinates"][0]) for f in admin["features"]]
+
+def pip(lon, lat, ring):
+    inside = False; n = len(ring); j = n - 1
+    for i in range(n):
+        xi, yi = ring[i]; xj, yj = ring[j]
+        if ((yi > lat) != (yj > lat)) and (lon < (xj - xi) * (lat - yi) / (yj - yi + 1e-15) + xi):
+            inside = not inside
+        j = i
+    return inside
+
+def in_counties(lon, lat, counties):
+    return any(pip(lon, lat, ring) for _, ring in counties)
+
+def feature(geometry, props):
+    return {"type": "Feature", "properties": props, "geometry": geometry}
+
+# --------------------------------------------------------------------------- #
+def build_points():
+    feats = []
+    for pt in POINTS:
+        props = {k: v for k, v in pt.items() if k not in ("lon", "lat")}
+        feats.append(feature({"type": "Point", "coordinates": [pt["lon"], pt["lat"]]}, props))
+    return {"type": "FeatureCollection", "name": "hydraulic-structures", "features": feats}
+
+def build_osm(counties):
+    src = json.load(open(p("data", "sources", "overpass-water.json"), encoding="utf-8"))
+    idx = {f'{e["type"]}/{e["id"]}': e for e in src["elements"]}
+
+    # Reservoir surfaces
+    res_feats = []
+    for oid, attr in RES_SURFACES.items():
+        e = idx.get(oid)
+        if not e:
+            print(f"  ! missing {oid}"); continue
+        coords = [[round(c["lon"], 6), round(c["lat"], 6)] for c in e["geometry"]]
+        if coords[0] != coords[-1]:
+            coords.append(coords[0])
+        props = {"id": "osm-" + oid.replace("/", "-"), "category": "reservoir_surface",
+                 "osm_id": oid, **attr}
+        res_feats.append(feature({"type": "Polygon", "coordinates": [coords]}, props))
+
+    # Canals (merge in-county segments per name into a MultiLineString)
+    canal_feats = []
+    for name, attr in CANALS.items():
+        segs = []
+        for e in src["elements"]:
+            if e.get("tags", {}).get("name") != name:
+                continue
+            line = [[round(c["lon"], 6), round(c["lat"], 6)] for c in e["geometry"]]
+            cx = sum(x for x, _ in line) / len(line); cy = sum(y for _, y in line) / len(line)
+            if in_counties(cx, cy, counties):
+                segs.append(line)
+        if not segs:
+            print(f"  ! no in-county segments for {name}"); continue
+        props = {"id": "canal-" + str(len(canal_feats) + 1), "name_zh": name, **attr}
+        geom = ({"type": "LineString", "coordinates": segs[0]} if len(segs) == 1
+                else {"type": "MultiLineString", "coordinates": segs})
+        canal_feats.append(feature(geom, props))
+
+    return ({"type": "FeatureCollection", "name": "osm-reservoir-surfaces", "features": res_feats},
+            {"type": "FeatureCollection", "name": "canals", "features": canal_feats})
+
+def main():
+    counties = load_counties()
+    points = build_points()
+    res, canals = build_osm(counties)
+
+    def write(obj, *path):
+        fp = p(*path)
+        json.dump(obj, open(fp, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+        print(f"  wrote {os.path.relpath(fp, ROOT)} ({len(obj['features'])} features)")
+
+    print("Building GIS layers:")
+    write(points, "data", "hydraulic-structures.geojson")
+    write(res, "data", "osm-reservoir-surfaces.geojson")
+    write(canals, "data", "canals.geojson")
+    print("Done.")
+
+if __name__ == "__main__":
+    main()
