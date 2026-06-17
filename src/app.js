@@ -45,10 +45,12 @@ function initMap() {
     ["p_reservoir", 420],
     ["p_river", 430],
     ["p_canal", 440],
+    ["p_place", 450],
     ["p_point", 460],
   ].forEach(([name, z]) => {
     map.createPane(name).style.zIndex = z;
   });
+  map.on("zoomend", () => { applyFilter(); updatePlaceLabels(); });
 
   currentTile = makeTile(DEFAULT_BASEMAP).addTo(map);
   L.control.scale({ imperial: false, position: "bottomright" }).addTo(map);
@@ -72,6 +74,7 @@ async function loadAll() {
   buildLayerControls();
   buildLegend();
   buildFeatureList();
+  setupRiverLabels();
   applyFilter();
 }
 
@@ -95,7 +98,10 @@ function addFeature(feature, def) {
   if (!geom) return;
   let layer, center;
 
-  if (def.kind === "point" || geom.type === "Point") {
+  if (def.kind === "place") {
+    layer = L.geoJSON(feature, { pointToLayer: placeMarker }).getLayers()[0];
+    center = [geom.coordinates[1], geom.coordinates[0]];
+  } else if (def.kind === "point" || geom.type === "Point") {
     layer = L.geoJSON(feature, { pointToLayer: pointToLayer }).getLayers()[0];
     center = [geom.coordinates[1], geom.coordinates[0]];
   } else if (def.kind === "river") {
@@ -125,11 +131,16 @@ function addFeature(feature, def) {
   }
 
   // Popups are built lazily so they always render in the current language.
-  if (def.kind !== "admin") {
+  if (def.kind === "place") {
+    layer.bindPopup(() => buildPopup(props), { maxWidth: 300 });
+    layer.bindTooltip(() => placeLabel(props), { permanent: true, direction: "center", className: "place-label lvl-" + (props.level || "town") });
+  } else if (def.kind !== "admin") {
     layer.bindPopup(() => buildPopup(props), { maxWidth: 320 });
-    layer.bindTooltip(() => pick(props, "name") || "", { direction: "top", opacity: 0.9 });
+    layer.bindTooltip(() => nameLabel(props), { direction: "top", opacity: 0.9 });
   }
 
+  const isPlace = def.kind === "place";
+  const ps = isPlace ? (PLACE_STYLE[props.level] || PLACE_STYLE.town) : null;
   records.push({
     layer,
     props,
@@ -137,8 +148,11 @@ function addFeature(feature, def) {
     kind: def.kind,
     category: props.category || def.kind,
     center,
-    search: `${props.name_zh || ""} ${props.name_en || ""}`.toLowerCase(),
+    search: `${props.name_zh || ""} ${props.name_en || ""} ${props.name_hist_zh || ""}`.toLowerCase(),
     inList: def.kind === "point" || def.kind === "reservoir" || def.kind === "canal",
+    isPlace,
+    minMarker: ps ? ps.minMarker : 0,
+    minLabel: ps ? ps.minLabel : 0,
   });
 }
 
@@ -169,6 +183,25 @@ function pointToLayer(feature, latlng) {
   });
 }
 
+function placeMarker(feature, latlng) {
+  const p = feature.properties || {};
+  const s = PLACE_STYLE[p.level] || PLACE_STYLE.town;
+  return L.circleMarker(latlng, { pane: "p_place", radius: s.r, color: "#ffffff", weight: 1, fillColor: s.color, fillOpacity: 0.95 });
+}
+// Map label: "current（historical）" when a historical name exists.
+function placeLabel(p) {
+  const cur = pick(p, "name") || p.name_zh || "";
+  const h = pick(p, "name_hist");
+  if (!h) return cur;
+  return state.lang === "zh" ? `${cur}（${h}）` : `${cur} (${h})`;
+}
+function nameLabel(p) {
+  const cur = pick(p, "name") || "";
+  const h = pick(p, "name_hist");
+  if (!h) return cur;
+  return state.lang === "zh" ? `${cur}（${h}）` : `${cur} (${h})`;
+}
+
 function bindCountyTooltip(layer, props) {
   layer.bindTooltip(pick(props, "name"), {
     permanent: true,
@@ -185,15 +218,22 @@ function buildPopup(p) {
   const name = pick(p, "name") || "—";
   const alt = p[`name_${other()}`] ? `<p class="popup-sub">${p[`name_${other()}`]}</p>` : "";
   const cat = CATEGORIES[p.category];
-  const catLabel = cat ? cat[state.lang] : p.category || "";
   const eraLabel = pick(p, "era_label");
 
   const rows = [];
-  if (catLabel) rows.push(row(L_.f_type, esc(catLabel)));
+  let typeLabel = cat ? cat[state.lang] : "";
+  if (p.level && L_.levels && L_.levels[p.level]) typeLabel = L_.levels[p.level];
+  if (typeLabel) rows.push(row(L_.f_type, esc(typeLabel)));
+
+  const hist = pick(p, "name_hist");
+  if (hist) rows.push(row(L_.f_hist, esc(hist)));
+
   if (p.era_start != null || p.era_end != null)
     rows.push(row(L_.f_era, `${esc(formatEra(p.era_start, p.era_end, state.lang))}${eraLabel ? ` · ${esc(eraLabel)}` : ""}`));
   const builder = pick(p, "builder");
   if (builder) rows.push(row(L_.f_builder, esc(builder)));
+  const county = pick(p, "county");
+  if (county) rows.push(row(L_.f_county, esc(county)));
   const status = pick(p, "status");
   if (status) rows.push(row(L_.f_status, esc(status)));
   if (p.confidence)
@@ -204,7 +244,7 @@ function buildPopup(p) {
   else if (p.source) src = esc(p.source);
   if (src) rows.push(row(L_.f_source, src));
 
-  const desc = pick(p, "description");
+  const desc = pick(p, "description") || pick(p, "note");
   const descHtml = desc ? `<div class="popup-desc">${esc(desc)}</div>` : "";
 
   return `
@@ -232,13 +272,44 @@ function isActiveAtYear(props, year) {
 }
 
 function applyFilter() {
+  const z = map.getZoom();
   records.forEach((r) => {
-    const show = state.layerOn[r.layerId] && isActiveAtYear(r.props, state.year);
+    let show = state.layerOn[r.layerId] && isActiveAtYear(r.props, state.year);
+    if (r.isPlace) show = show && z >= r.minMarker; // progressive disclosure by zoom
     const on = map.hasLayer(r.layer);
     if (show && !on) r.layer.addTo(map);
     else if (!show && on) map.removeLayer(r.layer);
   });
   refreshListDimming();
+  updatePlaceLabels();
+}
+
+// Toggle permanent place/river labels by zoom (markers stay; labels declutter).
+function updatePlaceLabels() {
+  const z = map.getZoom();
+  records.forEach((r) => {
+    let minL = null;
+    if (r.isPlace) minL = r.minLabel;
+    else if (r.isRiverLabel) minL = 8;
+    if (minL === null) return;
+    const tt = r.layer.getTooltip && r.layer.getTooltip();
+    const el = tt && tt.getElement && tt.getElement();
+    if (!el) return;
+    el.style.display = (map.hasLayer(r.layer) && z >= minL) ? "" : "none";
+  });
+}
+
+// Label each river once (on its longest segment) with the bilingual dual name.
+function setupRiverLabels() {
+  const groups = {};
+  records.forEach((r) => { if (r.layerId !== "rivers") return; (groups[r.props.name_zh] = groups[r.props.name_zh] || []).push(r); });
+  Object.values(groups).forEach((g) => {
+    let best = g[0], bl = -1;
+    g.forEach((r) => { const b = r.layer.getBounds(); const d = b.getNorthEast().distanceTo(b.getSouthWest()); if (d > bl) { bl = d; best = r; } });
+    best.layer.unbindTooltip();
+    best.layer.bindTooltip(() => nameLabel(best.props), { permanent: true, direction: "center", className: "river-label" });
+    best.isRiverLabel = true;
+  });
 }
 
 /* =========================================================================== */
@@ -276,6 +347,12 @@ function buildLegend() {
     { cls: "poly", style: `background:${VECTOR_STYLE.reservoir.fillColor};opacity:.6`, zh: "水库水面", en: "Reservoir surface" },
   ];
   lines.forEach((l) => host.appendChild(legendRow(l.cls, l.style, l[state.lang])));
+  // Place levels (towns & villages)
+  if (records.some((r) => r.isPlace)) {
+    [["seat", "县城", "County seat"], ["town", "乡镇", "Township"], ["village", "村", "Village"]].forEach(([lv, zh, en]) =>
+      host.appendChild(legendRow("", `background:${PLACE_STYLE[lv].color}`, state.lang === "zh" ? zh : en))
+    );
+  }
   // Point categories actually present in the data
   const present = new Set(records.filter((r) => r.kind === "point").map((r) => r.category));
   Object.keys(CATEGORIES).forEach((key) => {
@@ -283,6 +360,11 @@ function buildLegend() {
     const c = CATEGORIES[key];
     host.appendChild(legendRow("", `background:${c.color}`, c[state.lang]));
   });
+  const hint = document.createElement("div");
+  hint.className = "legend-row";
+  hint.style.cssText = "color:var(--muted);font-size:11px;margin-top:2px";
+  hint.textContent = state.lang === "zh" ? "放大可见更多乡镇 / 村名" : "Zoom in for more town & village names";
+  host.appendChild(hint);
 }
 function legendRow(cls, style, label) {
   const d = document.createElement("div");
@@ -444,6 +526,11 @@ function toggleLang() {
   adminLayers.forEach(({ layer, props }) => {
     layer.unbindTooltip();
     bindCountyTooltip(layer, props);
+  });
+  // Refresh permanent place / river labels in the new language
+  records.forEach((r) => {
+    if (r.isPlace && r.layer.getTooltip()) r.layer.setTooltipContent(placeLabel(r.props));
+    else if (r.isRiverLabel && r.layer.getTooltip()) r.layer.setTooltipContent(nameLabel(r.props));
   });
   // Reopen any open popup in the new language
   records.forEach((r) => {

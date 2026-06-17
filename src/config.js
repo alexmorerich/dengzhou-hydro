@@ -82,8 +82,17 @@ const LAYERS = [
   { id: "rivers",     kind: "river",     file: "data/rivers.geojson",                zh: "河流水系",         en: "Rivers & streams",  on: true,  z: 300 },
   { id: "canals",     kind: "canal",     file: "data/canals.geojson",                zh: "灌渠 / 调水工程",  en: "Canals & transfers",on: true,  z: 320 },
   { id: "resSurface", kind: "reservoir", file: "data/osm-reservoir-surfaces.geojson",zh: "水库水面",         en: "Reservoir surfaces",on: true,  z: 350 },
+  { id: "places",     kind: "place",     file: "data/places.geojson",                zh: "城邑·乡镇·村",     en: "Towns & villages",  on: true,  z: 500 },
   { id: "structures", kind: "point",     file: "data/hydraulic-structures.geojson",  zh: "水利设施 / 史迹",  en: "Hydraulic works",   on: true,  z: 600 },
 ];
+
+/* Place styling by level. minMarker / minLabel = zoom thresholds for showing the
+ * dot and its label (progressive disclosure: seats → townships → villages). */
+const PLACE_STYLE = {
+  seat:    { color: "#8a1c1c", r: 6.0, minMarker: 7, minLabel: 8 },
+  town:    { color: "#b5651d", r: 3.8, minMarker: 9, minLabel: 10 },
+  village: { color: "#6b7785", r: 2.4, minMarker: 11, minLabel: 12 },
+};
 
 /* Basemap tile sources. OSM and its derivatives serve WGS-84 tiles, which align
  * with the WGS-84 vector data (no GCJ-02 offset). */

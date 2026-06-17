@@ -113,11 +113,12 @@
 | 文件 | 几何 | 内容 |
 |---|---|---|
 | `admin-boundaries.geojson` | 面 | 邓州、内乡、新野三县界（geoBoundaries） |
-| `rivers.geojson` | 线 | 湍河及刁河、赵河、白河、唐白河、严陵河等水系（OSM） |
+| `rivers.geojson` | 线 | 湍河、刁河、赵河、白河、唐白河、严陵河等水系，**含古今名称**（湍河/湍水…）（OSM + 考订） |
 | `canals.geojson` | 线 | 南水北调中线总干渠、引丹渠、清泉沟隧洞、腰兴渠（OSM） |
 | `osm-reservoir-surfaces.geojson` | 面 | 张沟、王营、滕庄等水库水面（OSM） |
+| `places.geojson` | 点 | **县城·乡镇·村共 127 处**，含古今地名（穰东镇/涅阳…）；按缩放分级显示（OSM 现名 + 人工考订古名） |
 | `hydraulic-structures.geojson` | 点 | 历代水利设施与史迹（六门堤、围堰、各水库、渡槽、橡胶坝…） |
-| `sources/overpass-water.json` | — | 构建上述 OSM 图层所用的原始 Overpass 抽取（可复现） |
+| `sources/overpass-water.json`, `sources/osm-places.json` | — | 构建上述 OSM 图层所用的原始 Overpass 抽取（可复现） |
 
 **核心字段（每个要素）**：
 
@@ -152,7 +153,8 @@ dengzhou-hydro/
 ├── data/                   # GeoJSON 数据（见上表）
 │   └── sources/            # 可复现的原始数据抽取
 ├── scripts/
-│   └── build_data.py       # 由史料 + OSM 抽取生成数据图层（可重跑）
+│   ├── build_data.py       # 由史料 + OSM 抽取生成数据图层（可重跑）
+│   └── build_places.py     # 生成城邑·乡镇·村图层 + 河流古今名（可重跑）
 ├── docs/
 │   ├── history.md          # 详细水利史（双语）
 │   └── data-sources.md     # 数据来源、版权与方法
@@ -164,8 +166,8 @@ dengzhou-hydro/
 历史要素的属性与坐标在 [`scripts/build_data.py`](scripts/build_data.py) 中以结构化表格维护（坐标依据“邓州城关 + 史载方位里程”推定，可信度逐条标注）。修改后重跑即可重新生成数据：
 
 ```bash
-python3 scripts/build_data.py
-# → 重新生成 data/hydraulic-structures.geojson、osm-reservoir-surfaces.geojson、canals.geojson
+python3 scripts/build_data.py    # → hydraulic-structures / osm-reservoir-surfaces / canals
+python3 scripts/build_places.py  # → places.geojson + 为 rivers.geojson 补古今名称
 ```
 
 如需刷新 OSM 抽取，可用 `data/sources/overpass-water.json` 顶部记录的 Overpass 查询重新拉取。
@@ -267,11 +269,12 @@ All vector data is **GeoJSON (WGS-84 / EPSG:4326)** under [`data/`](data/):
 | File | Geometry | Contents |
 |---|---|---|
 | `admin-boundaries.geojson` | Polygon | Dengzhou, Neixiang, Xinye county boundaries (geoBoundaries) |
-| `rivers.geojson` | LineString | The Tuan and the Diao, Zhao, Bai, Tangbai, Yanling rivers (OSM) |
+| `rivers.geojson` | LineString | The Tuan, Diao, Zhao, Bai, Tangbai, Yanling rivers **with current + historical names** (Tuan/Tuanshui…) (OSM + compiled) |
 | `canals.geojson` | (Multi)LineString | S-to-N main canal, Yindan canal, Qingquangou tunnel, Yaoxing canal (OSM) |
 | `osm-reservoir-surfaces.geojson` | Polygon | Zhanggou, Wangying, Tengzhuang reservoir surfaces (OSM) |
+| `places.geojson` | Point | **127 county seats, townships & villages** with current + ancient names (Rangdong/Nieyang…); zoom-tiered labels (OSM names + compiled historical names) |
 | `hydraulic-structures.geojson` | Point | Works & sites through the ages (Six-Gate Weir, cofferdams, reservoirs, aqueduct, rubber dams…) |
-| `sources/overpass-water.json` | — | The raw Overpass extract used to build the OSM layers (reproducible) |
+| `sources/overpass-water.json`, `sources/osm-places.json` | — | The raw Overpass extracts used to build the OSM layers (reproducible) |
 
 **Core fields (every feature)** — see the annotated example in the Chinese section above. Years are integers, negative = BCE, `era_end: 2026` means "still in use", and `confidence` is `high / medium / low`.
 
@@ -289,7 +292,8 @@ dengzhou-hydro/
 ├── data/                   # GeoJSON layers (table above)
 │   └── sources/            # reproducible raw extracts
 ├── scripts/
-│   └── build_data.py       # builds the layers from sources + an inline works table
+│   ├── build_data.py       # builds works/reservoir/canal layers from sources
+│   └── build_places.py     # builds the towns & villages layer + river historical names
 ├── docs/
 │   ├── history.md          # detailed, bilingual water history
 │   └── data-sources.md     # provenance, licensing, method
@@ -301,8 +305,8 @@ dengzhou-hydro/
 Historical attributes and coordinates live as a structured table in [`scripts/build_data.py`](scripts/build_data.py) (coordinates inferred from the Dengzhou anchor plus recorded bearings/distances, with per-record confidence). Edit and re-run:
 
 ```bash
-python3 scripts/build_data.py
-# → regenerates data/hydraulic-structures.geojson, osm-reservoir-surfaces.geojson, canals.geojson
+python3 scripts/build_data.py    # → hydraulic-structures / osm-reservoir-surfaces / canals
+python3 scripts/build_places.py  # → places.geojson + adds historical names to rivers.geojson
 ```
 
 To refresh the OSM extract, re-run the Overpass query recorded at the top of `data/sources/overpass-water.json`.

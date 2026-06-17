@@ -1,0 +1,2800 @@
+{
+ "type": "FeatureCollection",
+ "name": "places",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "城关镇",
+    "name_en": "Chengguan",
+    "name_hist_zh": "郦县 / 菊潭",
+    "name_hist_en": "Li / Jutan",
+    "level": "seat",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "秦汉郦县→隋菊潭→唐内乡；内乡县衙",
+    "note_en": "Qin–Han Li county → Sui Jutan → Tang Neixiang; the County Yamen",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.84361,
+     33.04667
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "汉城街道",
+    "name_en": "Hancheng",
+    "name_hist_zh": "新野故城",
+    "name_hist_en": "Old Xinye",
+    "level": "seat",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "汉新野县城；光武中兴、邓禹故里",
+    "note_en": "Han Xinye county seat; cradle of the Later-Han restoration",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.36081,
+     32.51259
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "花洲街道",
+    "name_en": "Huazhou",
+    "name_hist_zh": "穰县·花洲",
+    "name_hist_en": "Rang / Huazhou",
+    "level": "seat",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "穰县故城核心；范仲淹建花洲书院、作《岳阳楼记》",
+    "note_en": "Core of old Rang; Fanzhong­yan's Huazhou Academy",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.10048,
+     32.6891
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "㴔滩镇",
+    "name_en": "Xitan",
+    "name_hist_zh": "汲滩",
+    "name_hist_en": "Jitan",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "明清水陆码头；近汉安众县",
+    "note_en": "Ming–Qing river port; near Han Anzhong county",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.271,
+     32.6815
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "七里坪乡",
+    "name_en": "Qiliping",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.84731,
+     33.32484
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "上庄乡",
+    "name_en": "Shangzhuang",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.37,
+     32.6544
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "上港乡",
+    "name_en": "Shanggang",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.317,
+     32.5023
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "九龙镇",
+    "name_en": "Jiulong",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.886,
+     32.7493
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "五星镇",
+    "name_en": "Wuxing",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.388,
+     32.4095
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "余关镇",
+    "name_en": "Yuguan",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.893,
+     33.1758
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "刘集镇",
+    "name_en": "Liuji",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.217,
+     32.4624
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "前高庙乡",
+    "name_en": "Qiangaomiao",
+    "name_hist_zh": "棘阳",
+    "name_hist_en": "Jiyang",
+    "level": "town",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "汉南阳郡棘阳县故城（唐河西岸）",
+    "note_en": "Han Jiyang county seat, west bank of the Tang River",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.512,
+     32.4935
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "十林镇",
+    "name_en": "Shilin",
+    "name_hist_zh": "楚碣 / 冠军境",
+    "name_hist_en": "Chu-weir area",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "州西北；楚堨(楚堰)遗址、南水北调湍河渡槽",
+    "note_en": "NW of the city; Chu-weir site & Tuanhe Aqueduct",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.8836,
+     32.90412
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "古城街道",
+    "name_en": "Gucheng",
+    "name_hist_zh": "穰县故城",
+    "name_hist_en": "Old Rang town",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "古穰城所在",
+    "note_en": "Site of the old Rang city wall",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.06204,
+     32.68594
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "城郊乡",
+    "name_en": "Chengjiao",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.35243,
+     32.48733
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "夏集乡",
+    "name_en": "Xiaji",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.15167,
+     32.78528
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "夏馆镇",
+    "name_en": "Xiaguan",
+    "name_hist_zh": "湍水之源",
+    "name_hist_en": "Tuan headwaters",
+    "level": "town",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "湍河发源地（宝天曼/翼望山）",
+    "note_en": "Source of the Tuan (Baotianman / Mt Yiwang)",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.78384,
+     33.36631
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "大桥乡",
+    "name_en": "Daqiao",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.87,
+     32.9919
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "小杨营镇",
+    "name_en": "Xiaoyangying",
+    "name_hist_zh": "朝阳",
+    "name_hist_en": "Zhaoyang",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "近汉朝阳县故城（刁河/朝水之阳）",
+    "note_en": "Near Han Zhaoyang county, on the Diao (Chao) River",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.246,
+     32.5386
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "岞岖镇",
+    "name_en": "Zuoqu",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.6812,
+     32.97578
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "师岗镇",
+    "name_en": "Shigang",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.7733,
+     32.93179
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "张村镇",
+    "name_en": "Zhangcun",
+    "name_hist_zh": "冠军",
+    "name_hist_en": "Guanjun",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "汉冠军县故城；霍去病封地",
+    "note_en": "Han Guanjun county; fief of Huo Qubing",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.90889,
+     32.84272
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "张楼乡",
+    "name_en": "Zhanglou",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.15,
+     32.7338
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "彭桥镇",
+    "name_en": "Pengqiao",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "排子河；刘山水库",
+    "note_en": "Paizi River; Liushan Reservoir",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.79105,
+     32.62477
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "文渠镇",
+    "name_en": "Wenqu",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.955,
+     32.7433
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "新甸铺镇",
+    "name_en": "Xindianpu",
+    "name_hist_zh": "刁河堂",
+    "name_hist_en": "Diaohetang",
+    "level": "town",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "刁河入白河处；近朝阳",
+    "note_en": "Where the Diao joins the Bai; near Zhaoyang",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.30401,
+     32.41155
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "施庵镇",
+    "name_en": "Shi'an",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.545,
+     32.5944
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "杏山旅游管理区杏山街道",
+    "name_en": "",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.69505,
+     32.62777
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "板场乡",
+    "name_en": "Banchang",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.71549,
+     33.40366
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "构林镇",
+    "name_en": "Goulin",
+    "name_hist_zh": "山都",
+    "name_hist_en": "Shandu",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "汉南阳郡山都县故城（古村）",
+    "note_en": "Han Shandu county seat (Gucun)",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.11579,
+     32.5027
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "林扒镇",
+    "name_en": "Linba",
+    "name_hist_zh": "临湍 / 古邓",
+    "name_hist_en": "Linтuan / anc. Deng",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "隋唐临湍县治；一说古邓国故地",
+    "note_en": "Sui–Tang Lintuan county; one tradition's site of ancient Deng",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.902,
+     32.5658
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "桃溪镇",
+    "name_en": "Taoxi",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.63015,
+     33.03753
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "桑庄镇",
+    "name_en": "Sangzhuang",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.216,
+     32.6004
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "樊集乡",
+    "name_en": "Fanji",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.4148,
+     32.62895
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "歪子镇",
+    "name_en": "Waizi",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.382,
+     32.7303
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "汉华街道",
+    "name_en": "Hanhua",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.37401,
+     32.53335
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "沙堰镇",
+    "name_en": "Shayan",
+    "name_hist_zh": "西棘阳",
+    "name_hist_en": "Xi-Jiyang",
+    "level": "town",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "南北朝西棘阳县故城（古城村）",
+    "note_en": "N. & S. Dynasties Western-Jiyang county (Gucheng village)",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.45698,
+     32.60598
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "湍东镇",
+    "name_en": "Tuandong",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "湍河东岸",
+    "note_en": "East bank of the Tuan",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.853,
+     33.0646
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "湍河街道",
+    "name_en": "Tuanhe",
+    "name_hist_zh": "穰城·湍滨",
+    "name_hist_en": "Tuan-side of Rang",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "沿湍河城区",
+    "note_en": "Tuan-riverside urban district",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.09063,
+     32.66564
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "溧河铺镇",
+    "name_en": "Lihepu",
+    "name_hist_zh": "溧河 / 棘水",
+    "name_hist_en": "Li (Ji) River",
+    "level": "town",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "古棘水之畔；近育阳",
+    "note_en": "On the old Ji River; near Yuyang",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.459,
+     32.5176
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "灌涨镇",
+    "name_en": "Guanzhang",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "默河",
+    "note_en": "On the Mo River",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.93635,
+     33.0396
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "王庄镇",
+    "name_en": "Wangzhuang",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.42203,
+     32.39581
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "王店镇",
+    "name_en": "Wangdian",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "云露湖水库",
+    "note_en": "Yunluhu Reservoir",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.95162,
+     33.1334
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "王集镇",
+    "name_en": "Wangji",
+    "name_hist_zh": "湍口",
+    "name_hist_en": "Tuankou",
+    "level": "town",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "湍河入白河汇流口",
+    "note_en": "Confluence where the Tuan empties into the Bai",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.3007,
+     32.6189
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "瓦亭镇",
+    "name_en": "Wating",
+    "name_hist_zh": "瓦亭",
+    "name_hist_en": "Wating",
+    "level": "town",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "古瓦亭",
+    "note_en": "Old Wating post",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.691,
+     32.8788
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "白牛镇",
+    "name_en": "Bainiu",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.211,
+     32.7598
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "穰东镇",
+    "name_en": "Rangdong",
+    "name_hist_zh": "涅阳",
+    "name_hist_en": "Nieyang",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "汉南阳郡涅阳县故城（涅水/赵河之阳）",
+    "note_en": "Han Nieyang county seat, on the Zhao (Nie) River",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.287,
+     32.85521
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "罗庄镇",
+    "name_en": "Luozhuang",
+    "name_hist_zh": "湍惠渠渠首",
+    "name_hist_en": "Tuanhui head",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "湍河入邓州处；湍惠渠拦河堰",
+    "note_en": "Where the Tuan enters Dengzhou; Tuanhui Canal weir",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.91627,
+     32.96862
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "腰店镇",
+    "name_en": "Yaodian",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.17167,
+     32.6925
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "裴营乡",
+    "name_en": "Peiying",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.059,
+     32.7871
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "赤眉镇",
+    "name_en": "Chimei",
+    "name_hist_zh": "赤眉",
+    "name_hist_en": "Chimei",
+    "level": "town",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "弹琴河；斩龙岗水库（传赤眉军）",
+    "note_en": "Tanqin River; Zhanlonggang Reservoir",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.794,
+     33.1927
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "赵店乡",
+    "name_en": "Zhaodian",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.791,
+     33.1224
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "赵集镇",
+    "name_en": "Zhaoji",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "半坡水库、湍惠渠灌区",
+    "note_en": "Banpo Reservoir; Tuanhui irrigation",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.992,
+     32.851
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "都司镇",
+    "name_en": "Dusi",
+    "name_hist_zh": "守御千户所",
+    "name_hist_en": "Ming garrison",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "明代军事都司/千户所",
+    "note_en": "Ming military garrison post",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.006,
+     32.4987
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "陶营乡",
+    "name_en": "Taoying",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.985,
+     32.612
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "马山口镇",
+    "name_en": "Mashankou",
+    "name_hist_zh": "马山口",
+    "name_hist_en": "Mashankou",
+    "level": "town",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "古商道；打磨岗水库",
+    "note_en": "Old trade pass; Damogang Reservoir",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.00268,
+     33.20818
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "高集乡",
+    "name_en": "Gaoji",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "张沟水库所在",
+    "note_en": "Site of Zhanggou Reservoir",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.911,
+     32.6535
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "龙堰乡",
+    "name_en": "Longyan",
+    "name_hist_zh": "龙堰",
+    "name_hist_en": "Longyan (Dragon Weir)",
+    "level": "town",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "以古堰得名",
+    "note_en": "Named for an old weir (堰)",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.08909,
+     32.60023
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "丁冲村",
+    "name_en": "Dingchong",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.80352,
+     32.63811
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "三岔口",
+    "name_en": "Sanchakou",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.57682,
+     32.63337
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "上陈家",
+    "name_en": "Shangchenjia",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.84561,
+     32.66323
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "上魏营",
+    "name_en": "Shangweiying",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.57543,
+     33.10802
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "下魏营",
+    "name_en": "Xiaweiying",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.57054,
+     33.10483
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "乔庄村",
+    "name_en": "Qiaozhuangcun",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.58393,
+     32.60871
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "习营村",
+    "name_en": "",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.85755,
+     32.8492
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "任庄",
+    "name_en": "Renzhuang",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.56815,
+     33.10334
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "傅营",
+    "name_en": "Fuying",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.71716,
+     32.67165
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "元庄",
+    "name_en": "Yuanzhuang",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.26389,
+     32.76028
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "刘沟",
+    "name_en": "Liugou",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.64853,
+     32.9415
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "刘湾",
+    "name_en": "",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.90343,
+     33.05196
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "前湾村",
+    "name_en": "",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.90779,
+     33.04433
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "北肜庄",
+    "name_en": "",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.34242,
+     32.76786
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "千佛阁",
+    "name_en": "Qianfoge",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.72342,
+     32.85914
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "南王村",
+    "name_en": "",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.29838,
+     32.70756
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "周单庄",
+    "name_en": "",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.36125,
+     32.75173
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "土寨",
+    "name_en": "Tuzhai",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.83462,
+     32.7554
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "坡根",
+    "name_en": "Pogen",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.65059,
+     32.94379
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "夏官营村",
+    "name_en": "",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.47951,
+     32.68088
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "大刘营",
+    "name_en": "Daliuying",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.77296,
+     32.66729
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "大王营村",
+    "name_en": "",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.30697,
+     32.72151
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "小刘营",
+    "name_en": "Xiaoliuying",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.78596,
+     32.66341
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "小陈营",
+    "name_en": "Xiaochenying",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.82533,
+     32.7501
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "小黑龙沟",
+    "name_en": "Xiaoheilonggou",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.58516,
+     32.62706
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "岗堤村",
+    "name_en": "Gangdi Village",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.80699,
+     33.10152
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "庄子上",
+    "name_en": "Zhuangzishang",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.54687,
+     32.61425
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "张家营",
+    "name_en": "Zhangjiaying",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.66107,
+     32.93699
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "张灌沟",
+    "name_en": "Zhang Guangou",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.64205,
+     32.93839
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "新柳步渠",
+    "name_en": "",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.3762,
+     32.75019
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "方沟",
+    "name_en": "Fanggou",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.5894,
+     32.61471
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "朱家营",
+    "name_en": "Zhujiaying",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.59453,
+     32.99516
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "朱营村",
+    "name_en": "Zhuyingcun",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.59558,
+     32.99705
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "李圪塔",
+    "name_en": "Ligeda",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.65448,
+     32.94032
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "李窝",
+    "name_en": "Liwo",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.83346,
+     32.79578
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "杨庄村",
+    "name_en": "",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.30637,
+     32.73236
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "杨洞保沟",
+    "name_en": "Yangdongbaogou",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.5747,
+     32.63898
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "林山村",
+    "name_en": "",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.78294,
+     32.65588
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "柳步渠",
+    "name_en": "",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.37069,
+     32.75433
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "柴沟村",
+    "name_en": "Chaigoucun",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.60999,
+     32.64817
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "欧家庄",
+    "name_en": "Oujiazhuang",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.58437,
+     32.60989
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "武家山根",
+    "name_en": "Wujiashangen",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.57084,
+     33.12771
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "洼里",
+    "name_en": "Wali",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.64582,
+     32.94617
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "白杨村",
+    "name_en": "Baiyang",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.65593,
+     32.94308
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "白果树",
+    "name_en": "Baiguoshu",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.56,
+     32.60729
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "白龙沟村",
+    "name_en": "Bailonggoucun",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.56943,
+     32.62688
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "石碑岭",
+    "name_en": "Shibeiling",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.56231,
+     32.63793
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "老梁庄",
+    "name_en": "",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.33331,
+     32.76791
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "老院庄",
+    "name_en": "",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.35265,
+     32.7544
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "肖楼",
+    "name_en": "Xiaolou",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.7549,
+     32.6674
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "莫李营村",
+    "name_en": "",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.34168,
+     32.76016
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "蒋庄",
+    "name_en": "Jiangzhuang",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.82466,
+     32.7408
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "蚂蚁成沟",
+    "name_en": "Mayichenggou",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.56459,
+     32.61951
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "蟒张营村",
+    "name_en": "",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "新野县",
+    "county_en": "Xinye",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     112.32648,
+     32.73866
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "西沟",
+    "name_en": "Xigou",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.58432,
+     32.61465
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "赵家",
+    "name_en": "",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.77493,
+     33.07504
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "赵家庄",
+    "name_en": "Zhaojiazhuang",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.58098,
+     32.63388
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "赵家沟",
+    "name_en": "Zhaojiagou",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.59706,
+     32.99947
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "迁洼",
+    "name_en": "Qianwa",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.83594,
+     32.78866
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "郦城村",
+    "name_en": "Zhicheng Village",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.80907,
+     33.09745
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "钢叉寿",
+    "name_en": "Gangchashou",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.53974,
+     32.61784
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "陈家老庄",
+    "name_en": "Chenjialaozhuang",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.56092,
+     32.63289
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "陶岔村",
+    "name_en": "Taochacun",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.71432,
+     32.67239
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "雷庄",
+    "name_en": "Leizhuang",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.55302,
+     32.61423
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "雷庄村",
+    "name_en": "Leizhuangcun",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.55736,
+     32.60688
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "雷洞沟",
+    "name_en": "Leidonggou",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.58086,
+     32.63737
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "马大河",
+    "name_en": "Madahe",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.55082,
+     32.61896
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "黄岭",
+    "name_en": "Huangling",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "内乡县",
+    "county_en": "Neixiang",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.65209,
+     32.94894
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name_zh": "黑龙沟",
+    "name_en": "Heilonggou",
+    "name_hist_zh": "",
+    "name_hist_en": "",
+    "level": "village",
+    "county_zh": "邓州市",
+    "county_en": "Dengzhou",
+    "note_zh": "",
+    "note_en": "",
+    "source": "OpenStreetMap (name); 历史地名人工考订 / hist. names compiled"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     111.59107,
+     32.6337
+    ]
+   }
+  }
+ ]
+}
