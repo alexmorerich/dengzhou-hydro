@@ -118,14 +118,27 @@ const TUAN = [[111.74,33.40],[111.80,33.30],[111.78,33.22],[111.86,33.07],[111.9
   [111.97,32.83],[111.99,32.74],[112.04,32.70],[112.12,32.63],[112.20,32.55],[112.27,32.47],[112.33,32.40]];
 const DIAO = [[111.66,32.92],[111.80,32.81],[111.92,32.70],[112.04,32.58],[112.15,32.49],[112.25,32.43],[112.32,32.39]];
 const BAI  = [[112.52,32.96],[112.47,32.80],[112.42,32.66],[112.38,32.52],[112.34,32.42],[112.33,32.40]];
+// tributaries (left-bank of the Tuan, + eastern Tang R.)
+const ZHAO    = [[112.42,32.96],[112.33,32.88],[112.25,32.79],[112.17,32.71],[112.10,32.66]]; // 赵河(古涅水) → 湍河
+const YANLING = [[111.98,32.96],[112.05,32.85],[112.12,32.77],[112.17,32.71]];                 // 严陵河 → 赵河/湍河
+const MO      = [[111.90,33.07],[111.93,32.96],[111.96,32.86],[111.99,32.78]];                 // 默河 → 湍河 (内乡)
+const TANG    = [[112.62,32.84],[112.55,32.63],[112.50,32.47],[112.46,32.36]];                 // 唐河 (东缘)
 
+// show = eras in which the place is labelled. ALLERA = continuous settlements;
+// IMP = Han→imperial counties; CHU = pre-imperial. (Names are era-appropriate.)
+const ALLERA=['chu','han','jinming','modern'], IMP=['han','jinming'];
 const CITIES = [
-  { lon:112.09, lat:32.68, major:true,  zh:'穰县', en:'Rang', sub_zh:'今邓州市区', sub_en:'Dengzhou city' },
-  { lon:111.85, lat:33.05, major:true,  zh:'内乡', en:'Neixiang', sub_zh:'今内乡县', sub_en:'Neixiang' },
-  { lon:112.36, lat:32.52, major:true,  zh:'新野', en:'Xinye', sub_zh:'今新野县', sub_en:'Xinye' },
-  { lon:112.25, lat:32.75, major:false, zh:'涅阳', en:'Nieyang', sub_zh:'今穰东镇', sub_en:'Rangdong' },
-  { lon:112.20, lat:32.43, major:false, zh:'山都', en:'Shandu', sub_zh:'今构林镇', sub_en:'Goulin' },
-  { lon:112.10, lat:32.87, major:false, zh:'冠军', en:'Guanjun', sub_zh:'今邓州北', sub_en:'N. Dengzhou' },
+  { lon:112.09, lat:32.68, major:true,  show:ALLERA, zh:'穰县', en:'Rang',     sub_zh:'今邓州市区', sub_en:'Dengzhou' },
+  { lon:111.85, lat:33.05, major:true,  show:ALLERA, zh:'内乡', en:'Neixiang', sub_zh:'今内乡县',   sub_en:'Neixiang' },
+  { lon:112.36, lat:32.52, major:true,  show:ALLERA, zh:'新野', en:'Xinye',    sub_zh:'今新野县',   sub_en:'Xinye' },
+  { lon:112.27, lat:32.85, major:false, show:IMP, zh:'涅阳', en:'Nieyang',  sub_zh:'今穰东镇',     sub_en:'Rangdong' },
+  { lon:112.18, lat:32.80, major:false, show:IMP, zh:'冠军', en:'Guanjun',  sub_zh:'今张村镇',     sub_en:'Zhangcun' },
+  { lon:112.20, lat:32.72, major:false, show:IMP, zh:'安众', en:'Anzhong',  sub_zh:'今邓州东北',   sub_en:'NE Dengzhou' },
+  { lon:112.31, lat:32.61, major:false, show:IMP, zh:'朝阳', en:'Zhaoyang', sub_zh:'今小杨营',     sub_en:'Xiaoyangying' },
+  { lon:112.15, lat:32.45, major:false, show:IMP, zh:'山都', en:'Shandu',   sub_zh:'今构林镇',     sub_en:'Goulin' },
+  { lon:112.51, lat:32.63, major:false, show:IMP, zh:'棘阳', en:'Jiyang',   sub_zh:'今前高庙',     sub_en:'Qiangaomiao' },
+  { lon:112.50, lat:32.87, major:false, show:IMP, zh:'育阳', en:'Yuyang',   sub_zh:'今新野北',     sub_en:'N. Xinye' },
+  { lon:111.82, lat:32.56, major:false, show:['chu'], zh:'邓（古邓国）', en:'Deng (anc.)', sub_zh:'今林扒·传', sub_en:'Linba (trad.)' },
 ];
 const MOUNTS = [
   { lon:111.52, lat:33.30, rl:0.16, rt:0.13, zh:'伏牛山', en:'Funiu Mts.' },
@@ -135,9 +148,9 @@ const MOUNTS = [
 /* Han Six-Gate system */
 const DIKE = { lon:111.99, lat:32.74 };                 // 六门堤 on the Tuan, NW of 穰城
 const C_MAIN = [[111.99,32.74],[112.04,32.715],[112.09,32.685]];          // 主干渠 → 穰城
-const C_N    = [[112.09,32.685],[112.15,32.72],[112.22,32.745],[112.25,32.75]]; // 北支 → 涅阳
-const C_S    = [[112.09,32.685],[112.13,32.60],[112.19,32.53],[112.30,32.51],[112.36,32.52]]; // 南支 → 山都/新野
-const C_NW   = [[111.99,32.74],[112.02,32.80],[112.10,32.87]];            // 北冠军渠
+const C_N    = [[112.09,32.685],[112.15,32.74],[112.21,32.80],[112.27,32.85]]; // 北支 → 涅阳
+const C_S    = [[112.09,32.685],[112.12,32.58],[112.15,32.48],[112.22,32.47],[112.30,32.50],[112.36,32.52]]; // 南支 → 山都/新野
+const C_NW   = [[111.99,32.74],[112.06,32.79],[112.13,32.805],[112.18,32.80]]; // 北冠军渠 → 冠军
 const C_SPILL= [[111.99,32.74],[111.93,32.80],[111.86,32.87],[111.80,32.93]]; // 分洪渠
 const PONDS_HAN = [ // 长藤结瓜 陂塘 (Han)
   {lon:112.04,lat:32.71},{lon:112.15,lat:32.66},{lon:112.13,lat:32.585},{lon:112.21,lat:32.53},
@@ -147,10 +160,10 @@ const PONDS_EXTRA = [ // added at Jin–Ming peak (29→38 陂)
   {lon:112.16,lat:32.71},{lon:112.06,lat:32.62},{lon:111.95,lat:32.70}];
 const FIELDS = [
   {lon:112.09,lat:32.66, rl:0.055,rt:0.035, on:0.66, zh:'穰县灌区',en:'Rang fields'},
-  {lon:112.25,lat:32.74, rl:0.045,rt:0.028, on:0.74, zh:'涅阳灌区',en:'Nieyang fields'},
+  {lon:112.27,lat:32.83, rl:0.045,rt:0.028, on:0.74, zh:'涅阳灌区',en:'Nieyang fields'},
   {lon:112.34,lat:32.53, rl:0.06, rt:0.035, on:0.80, zh:'新野灌区',en:'Xinye fields'},
-  {lon:112.20,lat:32.46, rl:0.04, rt:0.026, on:0.78, zh:'山都灌区',en:'Shandu fields'},
-  {lon:112.10,lat:32.86, rl:0.04, rt:0.024, on:0.70, zh:'冠军灌区',en:'Guanjun fields'},
+  {lon:112.15,lat:32.46, rl:0.04, rt:0.026, on:0.78, zh:'山都灌区',en:'Shandu fields'},
+  {lon:112.17,lat:32.79, rl:0.04, rt:0.024, on:0.70, zh:'冠军灌区',en:'Guanjun fields'},
 ];
 
 /* Chu Weir (Spring & Autumn) — stepped impoundments on the upper Tuan */
@@ -221,7 +234,7 @@ function txtS(s,x,y,sz,c,al='center'){ ctx.save(); ctx.font=`650 ${sz}px "PingFa
 function flow(P,n,sp,grow,c,off=0){ if(grow<=0)return; ctx.save(); for(let i=0;i<n;i++){ const b=((TICK*sp+off+i/n)%1); const pr=clamp(b/grow,0,1); if(b>grow)continue; const q=pathPt(P,b); ctx.fillStyle=c; ctx.globalAlpha=0.35+0.5*grow; ctx.beginPath(); ctx.ellipse(q.x,q.y,7,2.6,0,0,Math.PI*2); ctx.fill(); } ctx.globalAlpha=1; ctx.restore(); }
 
 /* ---------- Base scene (all eras) ---------- */
-function drawBase(modern){
+function drawBase(eraId){
   const bg=ctx.createLinearGradient(0,0,0,CH);
   bg.addColorStop(0,'#efe7d0'); bg.addColorStop(.55,'#eae0c6'); bg.addColorStop(1,'#e6dabb');
   ctx.fillStyle=bg; ctx.fillRect(0,0,CW,CH);
@@ -242,27 +255,32 @@ function drawBase(modern){
     txtS(L(m),c.x,c.y,11,'rgba(95,72,28,.85)'); });
   txt(lang==='zh'?'南 阳 盆 地':'Nanyang Basin', G(112.16,32.62).x, G(112.16,32.62).y+92, 13,'rgba(70,100,45,.4)','center');
 
-  // rivers
-  drawRiver(TUAN, true, lang==='zh'?'湍 河':'Tuan R.');
-  drawRiver(DIAO, false, lang==='zh'?'刁河':'Diao R.');
-  drawRiver(BAI, false, lang==='zh'?'白河':'Bai R.');
+  // rivers — eastern/secondary first, tributaries, then the Tuan on top
+  drawRiver(BAI,     lang==='zh'?'白河（淯水）':'Bai R. (Yushui)',     11,6,11, 0.55);
+  drawRiver(TANG,    lang==='zh'?'唐河':'Tang R.',                    10,6,10.5,0.40);
+  drawRiver(DIAO,    lang==='zh'?'刁河（朝水）':'Diao R. (Chaoshui)',  11,6,11, 0.45);
+  drawRiver(ZHAO,    lang==='zh'?'赵河（涅水）':'Zhao R.',             8,4,10,  0.50);
+  drawRiver(YANLING, lang==='zh'?'严陵河':'Yanling R.',               7,4,9.5, 0.35);
+  drawRiver(MO,      lang==='zh'?'默河':'Mo R.',                      7,4,9.5, 0.40);
+  drawRiver(TUAN,    lang==='zh'?'湍河（湍水）':'Tuan R. (Tuanshui)',  16,10,14,0.30);
   // confluence note (Xinye)
   const cf=G(112.33,32.40); txt(lang==='zh'?'入白河':'→ Bai R.', cf.x+6, cf.y+6, 9,'rgba(40,90,130,.7)');
 
-  drawCities();
+  drawCities(eraId);
   drawCompassScale();
 }
 function L(o){ return o[lang] || o.zh; }
-function drawRiver(arr, main, label){
+function drawRiver(arr, label, bankW, waterW, lsz, lpos=0.4){
   const P=pts(arr);
-  strokePts(P, main?16:10, '#c5a25a');           // bank
-  strokePts(P, main?10:6, '#3b8fd4');            // water
-  ctx.save(); for(let i=0;i<(main?12:7);i++){ const b=((TICK*0.08+i/(main?12:7))%1); const q=pathPt(P,b);
-    ctx.fillStyle='rgba(255,255,255,.5)'; ctx.beginPath(); ctx.ellipse(q.x,q.y,main?8:5,main?2.6:1.8,0,0,Math.PI*2); ctx.fill(); } ctx.restore();
-  const mp=pathPt(P,main?0.30:0.5); txtS(label, mp.x-14, mp.y-12, main?14:11, '#185a87','center');
+  strokePts(P, bankW, '#c5a25a');                // bank
+  strokePts(P, waterW, '#3b8fd4');               // water
+  const n=Math.max(4, Math.round(P.length*0.9));
+  ctx.save(); for(let i=0;i<n;i++){ const b=((TICK*0.08+i/n)%1); const q=pathPt(P,b);
+    ctx.fillStyle='rgba(255,255,255,.5)'; ctx.beginPath(); ctx.ellipse(q.x,q.y, waterW*0.72, Math.max(1.4,waterW*0.26),0,0,Math.PI*2); ctx.fill(); } ctx.restore();
+  const mp=pathPt(P,lpos); txtS(label, mp.x-8, mp.y-10, lsz, '#185a87','center');
 }
-function drawCities(){
-  CITIES.forEach(c=>{ const p=G(c.lon,c.lat);
+function drawCities(eraId){
+  CITIES.forEach(c=>{ if(c.show && !c.show.includes(eraId)) return; const p=G(c.lon,c.lat);
     ctx.save();
     if(c.major){ ctx.fillStyle='#dcc6a3'; ctx.strokeStyle='#a87c40'; ctx.lineWidth=1.4;
       ctx.beginPath(); ctx.rect(p.x-15,p.y-11,30,22); ctx.fill(); ctx.stroke();
@@ -485,7 +503,7 @@ function fmtYear(y){ const t=T(); return y<0 ? (lang==='zh'?`${t.bce}${-y}年`:`
 function render(){
   ctx.clearRect(0,0,CW,CH);
   const era=ERAS[eraIdx]; const a=enter;
-  drawBase(era.id==='modern');
+  drawBase(era.id);
   if(era.id==='chu') eraChu(p,a);
   else if(era.id==='han') eraHan(p,a,false);
   else if(era.id==='jinming') eraJinMing(p,a);
