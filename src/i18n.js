@@ -7,6 +7,7 @@ const I18N = {
   zh: {
     title: "湍河流域水利工程地理信息系统",
     subtitle: "Tuan River Basin Hydraulic Heritage GIS · 春秋至今 2000+ 年",
+    demoLink: "▶ 动画演示",
     basemapLabel: "底图",
     layersTitle: "图层",
     legendTitle: "图例",
@@ -41,6 +42,7 @@ const I18N = {
   en: {
     title: "Tuan River Basin Hydraulic Heritage GIS",
     subtitle: "Water-conservancy works of Dengzhou · Neixiang · Xinye — 2,000+ years",
+    demoLink: "▶ Animation",
     basemapLabel: "Basemap",
     layersTitle: "Layers",
     legendTitle: "Legend",

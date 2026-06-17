@@ -11,9 +11,18 @@
 <p align="center">
   <a href="#-中文说明">中文</a> ·
   <a href="#-english">English</a> ·
-  <a href="https://alexmorerich.github.io/dengzhou-hydro/"><b>🌊 在线地图 / Live map</b></a> ·
+  <a href="https://alexmorerich.github.io/dengzhou-hydro/"><b>🗺️ 交互地图 / Interactive map</b></a> ·
+  <a href="https://alexmorerich.github.io/dengzhou-hydro/demo.html"><b>▶ 动画演示 / Live animation</b></a> ·
   <a href="docs/history.md">水利史 / History</a> ·
   <a href="docs/data-sources.md">数据来源 / Data sources</a>
+</p>
+
+<p align="center">
+  <a href="https://alexmorerich.github.io/dengzhou-hydro/demo.html">
+    <img src="assets/demo-preview.png" alt="水利演进动画 / hydraulic engineering animation" width="860">
+  </a>
+  <br>
+  <em>▶ 点击观看「两千年水利演进」Canvas 动画 · Click to watch the 2,000-year hydraulic-evolution animation</em>
 </p>
 
 <p align="center">
@@ -62,6 +71,17 @@
 | 🎯 **史迹定位** | 在侧栏时间线点击任一工程，地图会“穿越”到它的始建年代并定位、弹窗。 |
 | 🛰️ **多种底图** | 浅色/标准/卫星影像/深色，均为 WGS-84，与矢量数据精确对齐。 |
 | 📱 **响应式** | 桌面与移动端自适应，侧栏可折叠。 |
+
+### ▶ 动画演示（Canvas）
+
+除交互地图外，[`demo.html`](demo.html)（[在线](https://alexmorerich.github.io/dengzhou-hydro/demo.html)）用纯 Canvas 动画把流域水利工程的**运行过程**“放映”出来——无框架、单文件、可手机直接打开，地理坐标与 GIS 数据一致（WGS-84）。四个阶段自动循环：
+
+1. **春秋 · 楚堰** —— 上游八级跌水陂塘蓄水、灌田。
+2. **西汉 · 六门堤（召信臣）** —— 拦河抬水 → 六门开闸 → 主干渠输水 → 陂堰蓄调（长藤结瓜）→ 支渠灌田；可切换**正常 / 丰水分洪 / 枯水保灌**三种水情。
+3. **晋·明 · 鼎盛与衰废** —— 杜预复廿九陂、明增至卅八陂，至明末淤废。
+4. **现代 · 引丹与南水北调** —— 陶岔引丹、总干渠输水、南水北调中线经**湍河渡槽**跨河北送、水库蓄水、城区橡胶坝与湿地。
+
+支持：▶ 播放/暂停、按朝代跳段、调速、**中英文一键切换**。
 
 ### 收录的水利工程（节选）
 
@@ -122,7 +142,8 @@
 
 ```
 dengzhou-hydro/
-├── index.html              # 单页应用入口
+├── index.html              # 交互地图入口
+├── demo.html               # ▶ Canvas 水利演进动画（独立单文件）
 ├── src/
 │   ├── app.js              # 地图逻辑：加载、时间过滤、弹窗、时间线、双语
 │   ├── config.js           # 图层清单、朝代分期、要素配色、底图
@@ -205,6 +226,17 @@ This project brings them together on one **interactive, time-aware, bilingual** 
 | 🛰️ **Multiple basemaps** | Light / standard / satellite / dark, all WGS-84, aligned with the vector data. |
 | 📱 **Responsive** | Works on desktop and mobile; the sidebar collapses. |
 
+### ▶ Live animation (Canvas)
+
+Besides the interactive map, [`demo.html`](demo.html) ([live](https://alexmorerich.github.io/dengzhou-hydro/demo.html)) uses a pure-Canvas animation to *play* the basin's water systems **in operation** — no framework, single file, opens on a phone, with geography consistent with the GIS data (WGS-84). Four stages auto-loop:
+
+1. **Spring & Autumn · Chu Weir** — eight stepped impoundments on the upper Tuan filling and watering fields.
+2. **Western Han · Six-Gate Weir (Shao Xinchen)** — dam & raise → open the six gates → main canal → ponds buffer the flow ("vine & melons") → branch canals irrigate; toggle **normal / flood-spill / drought** regimes.
+3. **Jin–Ming · Peak & Decline** — Du Yu's 29 ponds, Ming's 38, then siltation.
+4. **Modern · Yindan & South-to-North Transfer** — Taocha intake, the Yindan canal, the Middle Route crossing the Tuan on the **Tuanhe Aqueduct**, reservoirs filling, urban rubber dam & wetland.
+
+Controls: ▶ play/pause, jump by dynasty, speed, and one-click **中文 / English**.
+
 ### Selected works covered
 
 > The full narrative is in [`docs/history.md`](docs/history.md). The `confidence` rating reflects how well-attested and well-located each record is.
@@ -247,7 +279,8 @@ All vector data is **GeoJSON (WGS-84 / EPSG:4326)** under [`data/`](data/):
 
 ```
 dengzhou-hydro/
-├── index.html              # single-page app entry
+├── index.html              # interactive map entry
+├── demo.html               # ▶ Canvas hydraulic-evolution animation (standalone)
 ├── src/
 │   ├── app.js              # map logic: loading, time filtering, popups, timeline, i18n
 │   ├── config.js           # layer manifest, dynasties, category colours, basemaps

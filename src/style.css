@@ -58,8 +58,10 @@ body {
 .btn {
   border: 1px solid rgba(255, 255, 255, 0.55); background: rgba(255, 255, 255, 0.12);
   color: #fff; border-radius: 6px; padding: 6px 12px; font-size: 12.5px; cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.15s; text-decoration: none; display: inline-flex; align-items: center;
 }
+#demoLink { background: rgba(26, 188, 156, 0.30); border-color: rgba(26, 188, 156, 0.8); font-weight: 600; }
+#demoLink:hover { background: rgba(26, 188, 156, 0.5); }
 .btn:hover { background: rgba(255, 255, 255, 0.26); }
 .btn.small { padding: 4px 10px; font-size: 12px; }
 .icon-btn {

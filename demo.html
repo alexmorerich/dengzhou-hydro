@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>湍河流域水利演进动画 · Tuan River Basin Hydraulic Engineering — Live Animation</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --ink:#1a1208; --paper:#f3ecd9; --card:#fffdf6; --line:rgba(60,40,10,.14);
+    --brand:#0b5394; --accent:#1abc9c; --muted:#8a6a3a;
+  }
+  body{
+    background:linear-gradient(160deg,#efe7d2,#e7dcc1);
+    font-family:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",-apple-system,Segoe UI,sans-serif;
+    color:var(--ink); -webkit-font-smoothing:antialiased;
+  }
+  #wrap{max-width:1180px;margin:0 auto;padding:14px 12px 30px;}
+  header.top{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:10px;}
+  h1{font-size:21px;font-weight:750;color:#3a1e00;line-height:1.2;}
+  h1 small{display:block;font-size:12.5px;font-weight:500;color:var(--muted);margin-top:2px;}
+  .top-links{margin-left:auto;display:flex;gap:8px;align-items:center;}
+  .lnk{font-size:13px;color:var(--brand);text-decoration:none;border:1px solid var(--line);
+       border-radius:8px;padding:6px 11px;background:var(--card);white-space:nowrap;}
+  .lnk:hover{border-color:var(--brand);}
+  .lnk.lang{cursor:pointer;}
+
+  .card{background:var(--card);border-radius:16px;box-shadow:0 10px 30px rgba(20,40,60,.12);
+        overflow:hidden;border:1px solid var(--line);}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 14px;
+           border-bottom:1px solid var(--line);background:#fffefa;}
+  button,select{border:1px solid var(--line);border-radius:9px;padding:6px 12px;background:#fff;
+                color:var(--ink);font-size:13.5px;cursor:pointer;font-family:inherit;transition:.12s;}
+  button:hover,select:hover{border-color:var(--brand);}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;}
+  .chip{border-radius:999px;padding:5px 12px;font-size:13px;background:#fff;color:var(--muted);}
+  .chip.active{background:var(--brand);color:#fff;border-color:var(--brand);}
+  .spacer{flex:1 1 auto;}
+  .readout{text-align:right;line-height:1.15;min-width:150px;}
+  .readout b{font-size:16px;color:#3a1e00;display:block;font-variant-numeric:tabular-nums;}
+  .readout span{font-size:12px;color:var(--muted);}
+
+  .stage{position:relative;background:#ece3c8;}
+  canvas{display:block;width:100%;height:auto;}
+  /* on-canvas play progress */
+  .pbar{height:4px;background:rgba(0,0,0,.07);}
+  .pbar > i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--accent));width:0;}
+
+  .leg{display:flex;flex-wrap:wrap;gap:8px 18px;padding:10px 14px;border-top:1px solid var(--line);
+       background:#fffefa;font-size:12.5px;color:#3a3026;}
+  .li{display:flex;align-items:center;gap:6px;}
+  .sq{width:14px;height:10px;border-radius:3px;flex:0 0 auto;}
+  .ln{width:18px;height:0;border-top-width:3px;border-top-style:solid;flex:0 0 auto;}
+  .note{margin-top:12px;font-size:12px;color:#7a6646;line-height:1.7;}
+  .note b{color:#5a4424;}
+  @media(max-width:680px){
+    h1{font-size:18px;} .readout{min-width:110px;} .chip,button,select{font-size:12.5px;padding:5px 9px;}
+  }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <header class="top">
+    <h1>
+      <span data-i="title">湍河流域水利工程 · 两千年演进动画</span>
+      <small data-i="subtitle">Tuan River Basin Hydraulic Engineering — a 2,000-year live animation</small>
+    </h1>
+    <div class="top-links">
+      <a class="lnk lang" id="langBtn">EN</a>
+      <a class="lnk" href="index.html" data-i="backMap">← 交互地图</a>
+    </div>
+  </header>
+
+  <div class="card">
+    <div class="toolbar">
+      <button id="btPlay">⏸ <span data-i="pause">暂停</span></button>
+      <button id="btReplay">↺ <span data-i="replay">重播本段</span></button>
+      <div class="chips" id="eraChips"></div>
+      <div class="spacer"></div>
+      <select id="selMode" title="water regime"></select>
+      <select id="selSpeed" title="speed"></select>
+      <div class="readout"><b id="yearOut">—</b><span id="stageOut">—</span></div>
+    </div>
+    <div class="stage">
+      <canvas id="cvs" width="1120" height="784"></canvas>
+    </div>
+    <div class="pbar"><i id="pbarFill"></i></div>
+    <div class="leg" id="legend"></div>
+  </div>
+
+  <p class="note" id="noteBox"></p>
+</div>
+
+<script>
+"use strict";
+/* ============================================================================
+ * 湍河流域水利演进动画 — self-contained Canvas animation (no framework).
+ * Demonstrates 2,000+ years of hydro engineering in the Tuan River basin
+ * "running": Spring & Autumn 楚堰 → Han 六门堤 irrigation → Jin–Ming peak/decline
+ * → modern Yindan / South-to-North transfer + reservoirs.
+ * Geography is consistent with the project's GIS data (WGS-84 lon/lat).
+ * ========================================================================== */
+
+/* ---------- Projection (lon/lat → canvas px) ---------- */
+const LON0 = 111.40, LON1 = 112.72;     // west → east
+const LATT = 33.40,  LATB = 32.30;       // north(top) → south(bottom)
+const CW = 1120, CH = Math.round(CW * ((LATT - LATB) / (LON1 - LON0)) * 0.84); // mild vertical squish → landscape
+const cvs = document.getElementById('cvs');
+cvs.height = CH;
+const ctx = cvs.getContext('2d');
+const gx = lon => (lon - LON0) / (LON1 - LON0) * CW;
+const gy = lat => (LATT - lat) / (LATT - LATB) * CH;
+const G  = (lon, lat) => ({ x: gx(lon), y: gy(lat) });
+
+/* ---------- Geographic data (lon,lat) ---------- */
+const TUAN = [[111.74,33.40],[111.80,33.30],[111.78,33.22],[111.86,33.07],[111.93,32.93],
+  [111.97,32.83],[111.99,32.74],[112.04,32.70],[112.12,32.63],[112.20,32.55],[112.27,32.47],[112.33,32.40]];
+const DIAO = [[111.66,32.92],[111.80,32.81],[111.92,32.70],[112.04,32.58],[112.15,32.49],[112.25,32.43],[112.32,32.39]];
+const BAI  = [[112.52,32.96],[112.47,32.80],[112.42,32.66],[112.38,32.52],[112.34,32.42],[112.33,32.40]];
+
+const CITIES = [
+  { lon:112.09, lat:32.68, major:true,  zh:'穰县', en:'Rang', sub_zh:'今邓州市区', sub_en:'Dengzhou city' },
+  { lon:111.85, lat:33.05, major:true,  zh:'内乡', en:'Neixiang', sub_zh:'今内乡县', sub_en:'Neixiang' },
+  { lon:112.36, lat:32.52, major:true,  zh:'新野', en:'Xinye', sub_zh:'今新野县', sub_en:'Xinye' },
+  { lon:112.25, lat:32.75, major:false, zh:'涅阳', en:'Nieyang', sub_zh:'今穰东镇', sub_en:'Rangdong' },
+  { lon:112.20, lat:32.43, major:false, zh:'山都', en:'Shandu', sub_zh:'今构林镇', sub_en:'Goulin' },
+  { lon:112.10, lat:32.87, major:false, zh:'冠军', en:'Guanjun', sub_zh:'今邓州北', sub_en:'N. Dengzhou' },
+];
+const MOUNTS = [
+  { lon:111.52, lat:33.30, rl:0.16, rt:0.13, zh:'伏牛山', en:'Funiu Mts.' },
+  { lon:111.50, lat:33.15, rl:0.10, rt:0.07, zh:'宝天曼', en:'Baotianman' },
+];
+
+/* Han Six-Gate system */
+const DIKE = { lon:111.99, lat:32.74 };                 // 六门堤 on the Tuan, NW of 穰城
+const C_MAIN = [[111.99,32.74],[112.04,32.715],[112.09,32.685]];          // 主干渠 → 穰城
+const C_N    = [[112.09,32.685],[112.15,32.72],[112.22,32.745],[112.25,32.75]]; // 北支 → 涅阳
+const C_S    = [[112.09,32.685],[112.13,32.60],[112.19,32.53],[112.30,32.51],[112.36,32.52]]; // 南支 → 山都/新野
+const C_NW   = [[111.99,32.74],[112.02,32.80],[112.10,32.87]];            // 北冠军渠
+const C_SPILL= [[111.99,32.74],[111.93,32.80],[111.86,32.87],[111.80,32.93]]; // 分洪渠
+const PONDS_HAN = [ // 长藤结瓜 陂塘 (Han)
+  {lon:112.04,lat:32.71},{lon:112.15,lat:32.66},{lon:112.13,lat:32.585},{lon:112.21,lat:32.53},
+  {lon:112.18,lat:32.46,big:true,zh:'钳卢陂',en:'Qianlu Res.'},{lon:112.07,lat:32.78}];
+const PONDS_EXTRA = [ // added at Jin–Ming peak (29→38 陂)
+  {lon:112.00,lat:32.66},{lon:112.10,lat:32.61},{lon:112.23,lat:32.60},{lon:112.28,lat:32.49},
+  {lon:112.16,lat:32.71},{lon:112.06,lat:32.62},{lon:111.95,lat:32.70}];
+const FIELDS = [
+  {lon:112.09,lat:32.66, rl:0.055,rt:0.035, on:0.66, zh:'穰县灌区',en:'Rang fields'},
+  {lon:112.25,lat:32.74, rl:0.045,rt:0.028, on:0.74, zh:'涅阳灌区',en:'Nieyang fields'},
+  {lon:112.34,lat:32.53, rl:0.06, rt:0.035, on:0.80, zh:'新野灌区',en:'Xinye fields'},
+  {lon:112.20,lat:32.46, rl:0.04, rt:0.026, on:0.78, zh:'山都灌区',en:'Shandu fields'},
+  {lon:112.10,lat:32.86, rl:0.04, rt:0.024, on:0.70, zh:'冠军灌区',en:'Guanjun fields'},
+];
+
+/* Chu Weir (Spring & Autumn) — stepped impoundments on the upper Tuan */
+const CHU = { lon:111.95, lat:32.85 };
+const CHU_FIELD = {lon:112.02,lat:32.82, rl:0.05,rt:0.03, zh:'楚堨灌区',en:'Chu-weir fields'};
+
+/* Modern works */
+const TAOCHA = { lon:111.45, lat:32.66 };               // 陶岔渠首 (water source, W margin)
+const C_YINDAN = [[111.45,32.66],[111.60,32.62],[111.76,32.62],[111.92,32.61],[112.06,32.585],[112.20,32.55],[112.32,32.52]]; // 引丹总干渠
+const C_SNWD   = [[111.43,32.45],[111.58,32.58],[111.74,32.72],[111.93,32.86],[112.05,32.99],[112.18,33.12],[112.30,33.24]];   // 南水北调中线
+const AQUE = { lon:111.93, lat:32.86 };                 // 湍河渡槽 (SNWD over Tuan)
+const RUBBER = { lon:112.06, lat:32.70 };               // 邓州城区橡胶坝
+const WETLAND = [[112.00,32.73],[112.05,32.71],[112.10,32.685],[112.14,32.66]]; // 湿地公园 ribbon
+const RES = [
+  {lon:111.92,lat:33.20, r:11, zh:'打磨岗水库',en:'Damogang Res.'},
+  {lon:111.85,lat:33.30, r:9,  zh:'斩龙岗水库',en:'Zhanlonggang'},
+  {lon:111.945,lat:32.657,r:9, zh:'张沟水库',en:'Zhanggou Res.'},
+  {lon:111.88,lat:32.52, r:8,  zh:'刘山水库',en:'Liushan Res.'},
+];
+
+/* ---------- Era timeline ---------- */
+const ERAS = [
+  { id:'chu',    year:-650, cycle:15, zh:'春秋 · 楚堰',           en:'Spring & Autumn · Chu Weir' },
+  { id:'han',    year:-34,  cycle:26, zh:'西汉 · 六门堤（召信臣）', en:'Western Han · Six-Gate Weir (Shao Xinchen)' },
+  { id:'jinming',year:1300, cycle:18, zh:'晋·明 · 鼎盛与衰废',     en:'Jin–Ming · Peak & Decline' },
+  { id:'modern', year:2014, cycle:24, zh:'现代 · 引丹与南水北调',   en:'Modern · Yindan & South-to-North Transfer' },
+];
+
+/* ---------- i18n ---------- */
+const I18N = {
+  zh:{ title:'湍河流域水利工程 · 两千年演进动画', subtitle:'从春秋楚堰、汉代六门堤到南水北调——水利系统“运行”全景',
+    backMap:'← 交互地图', pause:'暂停', play:'播放', replay:'重播本段',
+    modes:{normal:'正常年景',flood:'丰水/分洪',dry:'枯水/保灌'}, speeds:{'0.5':'0.5×','1':'1×','2':'2×'},
+    bce:'公元前', ce:'公元', present:'至今' },
+  en:{ title:'Tuan River Basin Hydraulic Engineering — 2,000-year animation', subtitle:'From the Chu Weir & Han Six-Gate Weir to the South-to-North Transfer — the water systems "running"',
+    backMap:'← Interactive map', pause:'Pause', play:'Play', replay:'Replay segment',
+    modes:{normal:'Normal year',flood:'Flood / spill',dry:'Drought / save'}, speeds:{'0.5':'0.5×','1':'1×','2':'2×'},
+    bce:'BCE', ce:'CE', present:'present' },
+};
+const LEGEND = [
+  {t:'ln', c:'#3b8fd4', zh:'湍河 / 天然河流', en:'Tuan & natural rivers'},
+  {t:'ln', c:'#5aafee', zh:'古代渠 / 陂', en:'Ancient canals / ponds'},
+  {t:'ln', c:'#2e86c1', zh:'南水北调中线', en:'South-to-North canal'},
+  {t:'ln', c:'#16a085', zh:'引丹灌渠', en:'Yindan canal'},
+  {t:'sq', c:'#9a6d2c', zh:'堤坝 / 闸', en:'Dike / gates'},
+  {t:'sq', c:'#7fc05a', zh:'灌区农田', en:'Irrigated fields'},
+  {t:'sq', c:'#d9c3a3', zh:'城邑', en:'Towns'},
+  {t:'sq', c:'#ef6a4a', zh:'分洪 / 泄水', en:'Flood spill'},
+];
+
+/* ---------- State ---------- */
+let lang='zh', paused=false, mode='normal', speed=1;
+let eraIdx=1, p=0, enter=1, last=performance.now();
+const T = ()=>I18N[lang];
+
+/* ---------- Small utils ---------- */
+const lerp=(a,b,t)=>a+(b-a)*t, clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+let TICK=0; // global animation clock (seconds), advances regardless of era progress
+function pts(arr){ return arr.map(q=>G(q[0],q[1])); }
+function strokePts(P,w,c,dash){ ctx.save(); ctx.strokeStyle=c; ctx.lineWidth=w; ctx.lineJoin='round'; ctx.lineCap='round';
+  if(dash) ctx.setLineDash(dash); ctx.beginPath(); ctx.moveTo(P[0].x,P[0].y); for(let i=1;i<P.length;i++)ctx.lineTo(P[i].x,P[i].y); ctx.stroke(); ctx.restore(); }
+function pathPt(P,prog){ if(prog<=0)return P[0]; if(prog>=1)return P[P.length-1];
+  const L=[]; let tot=0; for(let i=0;i<P.length-1;i++){const l=Math.hypot(P[i+1].x-P[i].x,P[i+1].y-P[i].y);L.push(l);tot+=l;}
+  let d=tot*prog; for(let i=0;i<L.length;i++){ if(d<=L[i]){const f=d/L[i];return {x:lerp(P[i].x,P[i+1].x,f),y:lerp(P[i].y,P[i+1].y,f)};} d-=L[i]; } return P[P.length-1]; }
+function txt(s,x,y,sz,c,al='left',bold=false){ ctx.save(); ctx.fillStyle=c; ctx.font=`${bold?'700':'500'} ${sz}px "PingFang SC","Microsoft YaHei",sans-serif`; ctx.textAlign=al; ctx.textBaseline='middle'; ctx.fillText(s,x,y); ctx.restore(); }
+function txtS(s,x,y,sz,c,al='center'){ ctx.save(); ctx.font=`650 ${sz}px "PingFang SC","Microsoft YaHei",sans-serif`; ctx.textAlign=al; ctx.textBaseline='middle';
+  ctx.lineWidth=3; ctx.strokeStyle='rgba(255,255,255,.85)'; ctx.strokeText(s,x,y); ctx.fillStyle=c; ctx.fillText(s,x,y); ctx.restore(); }
+function flow(P,n,sp,grow,c,off=0){ if(grow<=0)return; ctx.save(); for(let i=0;i<n;i++){ const b=((TICK*sp+off+i/n)%1); const pr=clamp(b/grow,0,1); if(b>grow)continue; const q=pathPt(P,b); ctx.fillStyle=c; ctx.globalAlpha=0.35+0.5*grow; ctx.beginPath(); ctx.ellipse(q.x,q.y,7,2.6,0,0,Math.PI*2); ctx.fill(); } ctx.globalAlpha=1; ctx.restore(); }
+
+/* ---------- Base scene (all eras) ---------- */
+function drawBase(modern){
+  const bg=ctx.createLinearGradient(0,0,0,CH);
+  bg.addColorStop(0,'#efe7d0'); bg.addColorStop(.55,'#eae0c6'); bg.addColorStop(1,'#e6dabb');
+  ctx.fillStyle=bg; ctx.fillRect(0,0,CW,CH);
+  // Nanyang basin tint
+  const bp=G(112.10,32.66); const rg=ctx.createRadialGradient(bp.x,bp.y,10,bp.x,bp.y,330);
+  rg.addColorStop(0,'rgba(150,200,110,.12)'); rg.addColorStop(1,'rgba(150,200,110,0)');
+  ctx.fillStyle=rg; ctx.beginPath(); ctx.ellipse(bp.x,bp.y,340,220,0,0,Math.PI*2); ctx.fill();
+  // graticule
+  ctx.save(); ctx.strokeStyle='rgba(150,120,60,.10)'; ctx.lineWidth=.6; ctx.setLineDash([3,7]);
+  for(let lo=111.5;lo<=112.7;lo+=0.2){const x=gx(lo); ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,CH);ctx.stroke(); txt(lo.toFixed(1)+'°E',x+2,CH-9,9,'rgba(130,100,55,.5)');}
+  for(let la=32.4;la<=33.4;la+=0.2){const y=gy(la); ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(CW,y);ctx.stroke(); txt(la.toFixed(1)+'°N',3,y-6,9,'rgba(130,100,55,.5)');}
+  ctx.setLineDash([]); ctx.restore();
+  // mountains
+  MOUNTS.forEach(m=>{ const c=G(m.lon,m.lat); const rx=m.rl/(LON1-LON0)*CW, ry=m.rt/(LATT-LATB)*CH;
+    const g=ctx.createRadialGradient(c.x,c.y,0,c.x,c.y,Math.max(rx,ry));
+    g.addColorStop(0,'rgba(120,98,55,.34)'); g.addColorStop(1,'rgba(120,98,55,0)');
+    ctx.fillStyle=g; ctx.beginPath(); ctx.ellipse(c.x,c.y,rx,ry,0,0,Math.PI*2); ctx.fill();
+    txtS(L(m),c.x,c.y,11,'rgba(95,72,28,.85)'); });
+  txt(lang==='zh'?'南 阳 盆 地':'Nanyang Basin', G(112.16,32.62).x, G(112.16,32.62).y+92, 13,'rgba(70,100,45,.4)','center');
+
+  // rivers
+  drawRiver(TUAN, true, lang==='zh'?'湍 河':'Tuan R.');
+  drawRiver(DIAO, false, lang==='zh'?'刁河':'Diao R.');
+  drawRiver(BAI, false, lang==='zh'?'白河':'Bai R.');
+  // confluence note (Xinye)
+  const cf=G(112.33,32.40); txt(lang==='zh'?'入白河':'→ Bai R.', cf.x+6, cf.y+6, 9,'rgba(40,90,130,.7)');
+
+  drawCities();
+  drawCompassScale();
+}
+function L(o){ return o[lang] || o.zh; }
+function drawRiver(arr, main, label){
+  const P=pts(arr);
+  strokePts(P, main?16:10, '#c5a25a');           // bank
+  strokePts(P, main?10:6, '#3b8fd4');            // water
+  ctx.save(); for(let i=0;i<(main?12:7);i++){ const b=((TICK*0.08+i/(main?12:7))%1); const q=pathPt(P,b);
+    ctx.fillStyle='rgba(255,255,255,.5)'; ctx.beginPath(); ctx.ellipse(q.x,q.y,main?8:5,main?2.6:1.8,0,0,Math.PI*2); ctx.fill(); } ctx.restore();
+  const mp=pathPt(P,main?0.30:0.5); txtS(label, mp.x-14, mp.y-12, main?14:11, '#185a87','center');
+}
+function drawCities(){
+  CITIES.forEach(c=>{ const p=G(c.lon,c.lat);
+    ctx.save();
+    if(c.major){ ctx.fillStyle='#dcc6a3'; ctx.strokeStyle='#a87c40'; ctx.lineWidth=1.4;
+      ctx.beginPath(); ctx.rect(p.x-15,p.y-11,30,22); ctx.fill(); ctx.stroke();
+      ctx.strokeStyle='#c2a263'; ctx.lineWidth=.7; ctx.strokeRect(p.x-11,p.y-7,22,14);
+    } else { ctx.fillStyle='#e3d2ab'; ctx.strokeStyle='#a87c40'; ctx.lineWidth=1; ctx.beginPath(); ctx.arc(p.x,p.y,6,0,Math.PI*2); ctx.fill(); ctx.stroke(); }
+    ctx.restore();
+    txtS(L(c), p.x, p.y-(c.major?20:16), c.major?13.5:11, '#4a2800','center');
+    txt(c[lang==='zh'?'sub_zh':'sub_en'], p.x, p.y+(c.major?26:18), 9,'rgba(100,70,20,.8)','center');
+  });
+}
+function drawCompassScale(){
+  const cx=CW-42,cy=46,r=18; ctx.save();
+  ctx.fillStyle='rgba(255,252,240,.85)'; ctx.strokeStyle='rgba(0,0,0,.12)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.arc(cx,cy,r+6,0,Math.PI*2); ctx.fill(); ctx.stroke();
+  [['N',0],['E',1],['S',2],['W',3]].forEach(([d,i])=>{ const a=i*Math.PI/2-Math.PI/2; const tx=cx+Math.cos(a)*r, ty=cy+Math.sin(a)*r;
+    ctx.fillStyle=d==='N'?'#cc2200':'#5a4020'; ctx.font=`700 ${d==='N'?12:10}px sans-serif`; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(lang==='zh'?({N:'北',E:'东',S:'南',W:'西'}[d]):d, tx,ty); });
+  ctx.restore();
+  const bar=(10/93.6)/(LON1-LON0)*CW; const sx=CW-150, sy=CH-20; // ~10 km
+  ctx.save(); ctx.strokeStyle='#5a4020'; ctx.lineWidth=2.4;
+  ctx.beginPath(); ctx.moveTo(sx,sy);ctx.lineTo(sx+bar,sy); ctx.moveTo(sx,sy-4);ctx.lineTo(sx,sy+4); ctx.moveTo(sx+bar,sy-4);ctx.lineTo(sx+bar,sy+4); ctx.stroke();
+  txt('10 km', sx+bar/2, sy-11, 10,'#5a4020','center'); ctx.restore();
+}
+
+/* ---------- Reusable parts ---------- */
+function pond(o,fill,alpha=1){ const p=G(o.lon,o.lat); const R=o.big?15:9; ctx.save(); ctx.globalAlpha=alpha;
+  ctx.strokeStyle='#2a6ca8'; ctx.lineWidth=1.4; ctx.fillStyle='rgba(59,143,212,.55)';
+  ctx.beginPath(); ctx.arc(p.x,p.y,R,0,Math.PI*2); ctx.fill(); ctx.stroke();
+  ctx.save(); ctx.beginPath(); ctx.arc(p.x,p.y,R-2,0,Math.PI*2); ctx.clip();
+  ctx.fillStyle=`rgba(190,224,254,${0.3+fill*0.55})`; ctx.fillRect(p.x-R,p.y+R-fill*2*R,2*R,2*R); ctx.restore();
+  ctx.restore(); if(o.big) txtS(L(o),p.x,p.y-R-7,11,'#1a5c8a'); }
+function field(f,wet,alpha=1){ const p=G(f.lon,f.lat); const rx=f.rl/(LON1-LON0)*CW, ry=f.rt/(LATT-LATB)*CH;
+  ctx.save(); ctx.globalAlpha=alpha;
+  ctx.fillStyle=`rgba(127,192,90,${0.22+wet*0.5})`; ctx.strokeStyle='#6a9c48'; ctx.lineWidth=1.1;
+  ctx.beginPath(); ctx.ellipse(p.x,p.y,rx,ry,0,0,Math.PI*2); ctx.fill(); ctx.stroke();
+  ctx.save(); ctx.beginPath(); ctx.ellipse(p.x,p.y,rx,ry,0,0,Math.PI*2); ctx.clip();
+  ctx.strokeStyle='rgba(70,110,45,.25)'; ctx.lineWidth=.8;
+  for(let dy=-ry+8;dy<ry;dy+=11){ ctx.beginPath(); ctx.moveTo(p.x-rx,p.y+dy); ctx.lineTo(p.x+rx,p.y+dy); ctx.stroke(); }
+  if(wet>0.05){ ctx.fillStyle=`rgba(255,255,255,${0.05+wet*0.13})`; for(let i=0;i<4;i++){ const sx=p.x-rx+((TICK*16+i*26)%(rx*2)); ctx.fillRect(sx,p.y-ry+i*14,18,3);} }
+  ctx.restore(); ctx.restore();
+  if(wet>0.12) txtS(L(f),p.x,p.y,10.5,'#255022'); }
+
+/* ---------- Era: Chu Weir (Spring & Autumn) ---------- */
+function eraChu(prog,a){
+  const c=G(CHU.lon,CHU.lat);
+  // stepped impoundments (八重) descending SE along the slope
+  const steps=8, fillAll=clamp(prog/0.55,0,1);
+  for(let i=0;i<steps;i++){
+    const sx=c.x+i*10, sy=c.y+i*7;
+    const f=clamp((fillAll*steps)-i,0,1);
+    ctx.save(); ctx.globalAlpha=a;
+    ctx.strokeStyle='#9a6d2c'; ctx.lineWidth=2; ctx.fillStyle=`rgba(70,150,210,${0.25+f*0.45})`;
+    ctx.beginPath(); ctx.ellipse(sx,sy,13,6,0.4,0,Math.PI*2); ctx.fill(); ctx.stroke(); ctx.restore();
+  }
+  txtS(lang==='zh'?'楚 堨（楚堰）':'Chu Weir', c.x+30, c.y-16, 13.5,'#5c3008');
+  txt(lang==='zh'?'高下相承八重':'eight stepped ponds', c.x+30, c.y-2, 10,'#8a6030');
+  const fw=clamp((prog-0.5)/0.4,0,1)*0.8; field(CHU_FIELD, fw, a);
+}
+
+/* ---------- Era: Han Six-Gate system ---------- */
+function gateOpen(prog){
+  if(mode==='flood') return prog<0.12?clamp(prog/0.12,0,1)*0.9:0.95;
+  if(mode==='dry')   return prog<0.12?clamp(prog/0.12,0,1)*0.32:0.32;
+  return prog<0.12?clamp(prog/0.12,0,1)*0.62:0.64;
+}
+function dike(open,a){
+  const d=G(DIKE.lon,DIKE.lat); ctx.save(); ctx.globalAlpha=a;
+  ctx.fillStyle='#9a6d2c'; ctx.fillRect(d.x-7,d.y-26,14,52);
+  ctx.fillStyle='#b8842e'; ctx.fillRect(d.x-4,d.y-26,5,52);
+  for(let i=0;i<6;i++){ const gxp=d.x-19+i*7.6; const lift=open*11;
+    ctx.fillStyle='#6b7885'; ctx.fillRect(gxp-2,d.y-22+lift,4,18-lift);
+    if(open>0.05){ ctx.strokeStyle=`rgba(59,143,212,${0.55+open*0.35})`; ctx.lineWidth=1.6+open*2;
+      ctx.beginPath(); ctx.moveTo(gxp,d.y-2); ctx.lineTo(gxp+open*22,d.y-2+(i-2.5)*0.6); ctx.stroke(); } }
+  ctx.restore();
+  txtS(lang==='zh'?'六 门 堤':'Six-Gate Weir', d.x, d.y-40, 14.5,'#5c3008');
+  txt(lang==='zh'?'六石门 · 召信臣':'six stone gates · Shao Xinchen', d.x, d.y+38, 10,'#334155','center');
+  // upstream impounded water
+  const up=pathPt(pts(TUAN),0.20); const rise=lerp(10,26,clamp(open/0.64,0,1));
+  ctx.save(); ctx.globalAlpha=a; ctx.fillStyle='rgba(59,143,212,.18)'; ctx.fillRect(up.x-50,up.y-rise/2,100,rise); ctx.restore();
+}
+function eraHan(prog,a, peak){
+  const ws = mode==='flood'?1.4:mode==='dry'?0.55:1.0;
+  const open=gateOpen(prog);
+  // canal beds + water
+  const mainG=clamp((prog-0.12)/0.18,0,1), nG=clamp((prog-0.40)/0.18,0,1),
+        sG=clamp((prog-0.46)/0.20,0,1), nwG=clamp((prog-0.34)/0.18,0,1);
+  [[C_MAIN,18,12],[C_N,14,9],[C_S,14,9],[C_NW,12,8]].forEach(([arr,bw,ww])=>{
+    ctx.save(); ctx.globalAlpha=a; strokePts(pts(arr),bw,'#c8973d'); strokePts(pts(arr),ww,'#5aafee'); ctx.restore();
+  });
+  // labels
+  ctx.save(); ctx.globalAlpha=a;
+  const mm=pathPt(pts(C_MAIN),0.5); txtS(lang==='zh'?'主干渠':'main canal',mm.x,mm.y-12,11.5,'#1a5c8a');
+  const nm=pathPt(pts(C_N),0.55); txtS(lang==='zh'?'北支渠':'N. branch',nm.x,nm.y-11,10.5,'#1a5c8a');
+  const sm=pathPt(pts(C_S),0.5); txtS(lang==='zh'?'南支渠':'S. branch',sm.x+4,sm.y+13,10.5,'#1a5c8a');
+  ctx.restore();
+  // flood spill
+  if(mode==='flood'){ const g=clamp((prog-0.16)/0.2,0,1); if(g>0){ ctx.save(); ctx.globalAlpha=a; strokePts(pts(C_SPILL),16,'#c8973d'); strokePts(pts(C_SPILL),9,'#ef6a4a'); ctx.restore();
+    flow(pts(C_SPILL),9,0.14,g,'#ffc8b8',0.5); const lp=pts(C_SPILL).slice(-1)[0]; txtS(lang==='zh'?'分洪泄水':'flood spill',lp.x-30,lp.y-14,11,'#b91c1c'); } }
+  // ponds
+  const PSET = peak ? PONDS_HAN.concat(PONDS_EXTRA) : PONDS_HAN;
+  PSET.forEach((pd,i)=>{ const f=clamp((prog-(0.46+ (i%6)*0.03))/0.18,0,1); pond(pd,f,a); });
+  // particles
+  flow(pts(C_MAIN),13,0.13*ws,mainG,'#bde0fa');
+  flow(pts(C_N),10,0.11*ws,nG,'#bde0fa',0.15);
+  flow(pts(C_S),11,0.10*ws,sG,'#bde0fa',0.30);
+  flow(pts(C_NW),8,0.09*ws,nwG,'#bde0fa',0.45);
+  // gate + fields
+  dike(open,a);
+  FIELDS.forEach(f=>{ let w=clamp((prog-f.on)/0.18,0,1); w = mode==='dry'?w*0.7 : mode==='flood'?Math.min(1,w*1.15):w; field(f,w,a); });
+}
+
+/* ---------- Era: Jin–Ming peak & decline ---------- */
+function eraJinMing(prog,a){
+  // Peak phase reuses Han network fully grown; decline dims it & tints silt.
+  const decline=clamp((prog-0.6)/0.4,0,1);
+  const aa=a*(1-decline*0.55);
+  // full canals
+  [[C_MAIN,18,12],[C_N,14,9],[C_S,14,9],[C_NW,12,8]].forEach(([arr,bw,ww])=>{ ctx.save(); ctx.globalAlpha=aa; strokePts(pts(arr),bw,'#c8973d'); strokePts(pts(arr),ww,'#5aafee'); ctx.restore(); });
+  PONDS_HAN.concat(PONDS_EXTRA).forEach((pd,i)=>{ const f=(1-decline)*clamp(prog/0.3+ (i%5)*0.0,0,1); pond(pd,Math.max(0.15,f),aa); });
+  dike(0.6*(1-decline),aa);
+  flow(pts(C_MAIN),13,0.12,(1-decline),'#bde0fa');
+  flow(pts(C_S),11,0.10,(1-decline),'#bde0fa',0.3);
+  FIELDS.forEach(f=> field(f,(1-decline)*0.8, aa));
+  // silt overlay on decline
+  if(decline>0){ ctx.save(); ctx.globalAlpha=decline*0.28; ctx.fillStyle='#c2a878';
+    const d=G(DIKE.lon,DIKE.lat); ctx.beginPath(); ctx.ellipse(d.x+60,d.y+30,150,90,0,0,Math.PI*2); ctx.fill(); ctx.restore();
+    txtS(lang==='zh'?'明末淤废':'silted up (late Ming)', G(112.06,32.62).x, G(112.06,32.62).y, 12,'#7a4a10'); }
+}
+
+/* ---------- Era: Modern ---------- */
+function eraModern(prog,a){
+  // relict Six-Gate (dashed)
+  ctx.save(); ctx.globalAlpha=a*0.5; const d=G(DIKE.lon,DIKE.lat);
+  ctx.strokeStyle='#9a6d2c'; ctx.lineWidth=2; ctx.setLineDash([4,4]); ctx.strokeRect(d.x-7,d.y-22,14,44); ctx.setLineDash([]); ctx.restore();
+  txt(lang==='zh'?'六门堤（遗址）':'Six-Gate (relict)', d.x, d.y-30, 9.5,'rgba(120,80,30,.7)','center');
+
+  const yindanG=clamp((prog-0.10)/0.25,0,1);
+  const snwdG  =clamp((prog-0.42)/0.28,0,1);
+  const cityG  =clamp((prog-0.70)/0.25,0,1);
+
+  // Yindan canal
+  ctx.save(); ctx.globalAlpha=a; strokePts(pts(C_YINDAN),11,'#0f7a63'); strokePts(pts(C_YINDAN),6,'#2fd0ab'); ctx.restore();
+  flow(pts(C_YINDAN),16,0.12,yindanG,'#bff3e6');
+  const ym=pathPt(pts(C_YINDAN),0.55); txtS(lang==='zh'?'引丹总干渠':'Yindan canal',ym.x,ym.y+14,11,'#0c6b54');
+  // Taocha headworks
+  const tc=G(TAOCHA.lon,TAOCHA.lat); ctx.save(); ctx.globalAlpha=a; ctx.fillStyle='#7f8c8d'; ctx.fillRect(tc.x-5,tc.y-9,10,18); ctx.restore();
+  txtS(lang==='zh'?'陶岔渠首':'Taocha intake', tc.x+4, tc.y-16, 10.5,'#3a4a50','left');
+  txt(lang==='zh'?'（源自丹江口）':'(from Danjiangkou)', tc.x+4, tc.y-3, 9,'#5a6a70','left');
+
+  // SNWD main canal (north)
+  ctx.save(); ctx.globalAlpha=a; strokePts(pts(C_SNWD),12,'#1e5a8a'); strokePts(pts(C_SNWD),6,'#4aa8e6'); ctx.restore();
+  flow(pts(C_SNWD),18,0.13,snwdG,'#cfeaff',0.2);
+  const sm=pathPt(pts(C_SNWD),0.7); txtS(lang==='zh'?'南水北调中线':'S-to-N Transfer',sm.x+8,sm.y-12,11,'#11476f');
+  // Tuanhe aqueduct (SNWD over Tuan) — trough with flow above river crossing
+  if(snwdG>0){ const aq=G(AQUE.lon,AQUE.lat); ctx.save(); ctx.globalAlpha=a;
+    ctx.strokeStyle='#5a4a6a'; ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(aq.x-22,aq.y-8); ctx.lineTo(aq.x+22,aq.y-12); ctx.stroke(); // trough deck
+    ctx.strokeStyle='#7a6a8a'; ctx.lineWidth=1.6; for(let i=-2;i<=2;i++){ ctx.beginPath(); ctx.moveTo(aq.x+i*10,aq.y-10); ctx.lineTo(aq.x+i*10,aq.y+4); ctx.stroke(); } // piers
+    ctx.restore();
+    flow([{x:aq.x-22,y:aq.y-10},{x:aq.x+22,y:aq.y-13}],5,0.5,snwdG,'#cfeaff');
+    txtS(lang==='zh'?'湍河渡槽':'Tuanhe Aqueduct', aq.x, aq.y-22, 11.5,'#3a2a55'); }
+
+  // reservoirs fill
+  RES.forEach((r,i)=>{ const f=clamp((prog-(0.12+i*0.05))/0.2,0,1); const p=G(r.lon,r.lat);
+    ctx.save(); ctx.globalAlpha=a; ctx.strokeStyle='#1c6dd0'; ctx.lineWidth=1.4; ctx.fillStyle='rgba(42,127,255,.5)';
+    ctx.beginPath(); ctx.arc(p.x,p.y,r.r,0,Math.PI*2); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.arc(p.x,p.y,r.r-2,0,Math.PI*2); ctx.clip(); ctx.fillStyle=`rgba(180,220,255,${.3+f*.5})`; ctx.fillRect(p.x-r.r,p.y+r.r-f*2*r.r,2*r.r,2*r.r); ctx.restore();
+    if(i<3) txtS(L(r),p.x,p.y-r.r-7,9.5,'#11476f'); });
+
+  // urban rubber dam + wetland + fields (late phase)
+  if(cityG>0){ const rb=G(RUBBER.lon,RUBBER.lat); ctx.save(); ctx.globalAlpha=a*cityG;
+    ctx.strokeStyle='#16a085'; ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(rb.x-10,rb.y); ctx.lineTo(rb.x+10,rb.y); ctx.stroke();
+    ctx.fillStyle='rgba(26,160,133,.25)'; strokePts(pts(WETLAND),12,'rgba(39,174,96,.35)'); ctx.restore();
+    txtS(lang==='zh'?'城区橡胶坝·湿地公园':'rubber dam · wetland', rb.x+30, rb.y+12, 10,'#0c6b54','left'); }
+  FIELDS.forEach(f=> field(f, cityG*0.85*1, a));
+}
+
+/* ---------- Stage annotation ---------- */
+function stageInfo(prog){
+  const era=ERAS[eraIdx];
+  let st={}, src='';
+  if(era.id==='chu'){
+    st = prog<0.5 ? {zh:'筑楚堨蓄水',en:'Building the Chu Weir'} : {zh:'灌溉上游农田',en:'Watering the upper fields'};
+    src = lang==='zh'?'《水经注·湍水》':'Commentary on the Water Classic';
+  } else if(era.id==='han'){
+    if(prog<0.12) st={zh:'拦河抬水',en:'Damming & raising the water'};
+    else if(prog<0.30) st={zh:'六门开闸分流',en:'Opening the six gates'};
+    else if(prog<0.46) st={zh:'主干渠输水',en:'Conveying along the main canal'};
+    else if(prog<0.66) st={zh:'陂堰蓄调（长藤结瓜）',en:'Ponds buffer the flow (vine & melons)'};
+    else st={zh:'支渠灌田 · 穰新野最为膏腴',en:'Branch canals irrigate the fields'};
+    if(mode==='flood'&&prog>0.16) st={zh:'丰水期：分洪 + 灌溉并行',en:'Flood: spill + irrigate together'};
+    if(mode==='dry'&&prog>0.16) st={zh:'枯水期：收窄闸门保灌',en:'Drought: narrow gates to save the crop'};
+    src = lang==='zh'?'《汉书·循吏传》建昭五年（前34年）':'Book of Han · 34 BCE';
+  } else if(era.id==='jinming'){
+    st = prog<0.6 ? {zh:'鼎盛：杜预复廿九陂、明增至卅八陂',en:'Peak: 29 ponds (Jin) → 38 (Ming)'} : {zh:'失修淤废',en:'Neglect & siltation'};
+    src = lang==='zh'?'《元和郡县志》·明嘉靖《南阳府志》':'Yuanhe Gazetteers · Ming records';
+  } else {
+    if(prog<0.42) st={zh:'陶岔引丹·总干渠输水',en:'Taocha intake · Yindan canal'};
+    else if(prog<0.70) st={zh:'南水北调中线·湍河渡槽跨河',en:'S-to-N canal · Tuanhe Aqueduct'};
+    else st={zh:'城区橡胶坝·湿地·现代灌区',en:'Rubber dam · wetland · modern irrigation'};
+    src = lang==='zh'?'引丹1974 · 南水北调2014':'Yindan 1974 · S-to-N 2014';
+  }
+  return {st, src};
+}
+function drawAnnotation(prog){
+  const {st,src}=stageInfo(prog);
+  const era=ERAS[eraIdx];
+  document.getElementById('stageOut').textContent = L(st);
+  document.getElementById('yearOut').textContent = fmtYear(era.year);
+  // on-canvas box
+  const bx=16, by=CH-92, bw=Math.min(420, CW*0.5), bh=76;
+  ctx.save(); ctx.fillStyle='rgba(255,252,242,.92)'; ctx.strokeStyle='rgba(0,0,0,.10)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.roundRect(bx,by,bw,bh,12); ctx.fill(); ctx.stroke(); ctx.restore();
+  txt(L(era), bx+14, by+20, 14, '#3a1e00', 'left', true);
+  txt(L(st), bx+14, by+44, 13, '#1a5c8a');
+  txt((lang==='zh'?'史料 ':'Source ')+src, bx+14, by+64, 10, '#9a7040');
+}
+function fmtYear(y){ const t=T(); return y<0 ? (lang==='zh'?`${t.bce}${-y}年`:`${-y} ${t.bce}`) : (lang==='zh'?`${y}年`:`${y} ${t.ce}`); }
+
+/* ---------- Render ---------- */
+function render(){
+  ctx.clearRect(0,0,CW,CH);
+  const era=ERAS[eraIdx]; const a=enter;
+  drawBase(era.id==='modern');
+  if(era.id==='chu') eraChu(p,a);
+  else if(era.id==='han') eraHan(p,a,false);
+  else if(era.id==='jinming') eraJinMing(p,a);
+  else eraModern(p,a);
+  drawAnnotation(p);
+  document.getElementById('pbarFill').style.width=(p*100).toFixed(1)+'%';
+}
+
+/* ---------- Loop ---------- */
+function frame(now){
+  const dt=Math.min(0.05,(now-last)/1000); last=now;
+  if(!paused){
+    TICK += dt;
+    enter=clamp(enter+dt/0.9,0,1);
+    p += dt/ERAS[eraIdx].cycle*speed;
+    if(p>=1){ p=0; eraIdx=(eraIdx+1)%ERAS.length; enter=0; syncChips(); }
+  }
+  render();
+  requestAnimationFrame(frame);
+}
+
+/* ---------- Controls ---------- */
+function syncChips(){ document.querySelectorAll('#eraChips .chip').forEach((c,i)=>c.classList.toggle('active',i===eraIdx)); }
+function buildChips(){ const host=document.getElementById('eraChips'); host.innerHTML='';
+  ERAS.forEach((e,i)=>{ const b=document.createElement('button'); b.className='chip'+(i===eraIdx?' active':''); b.textContent=L(e);
+    b.onclick=()=>{ eraIdx=i; p=0; enter=0; syncChips(); }; host.appendChild(b); }); }
+function buildSelects(){
+  const m=document.getElementById('selMode'); m.innerHTML='';
+  Object.entries(T().modes).forEach(([k,v])=>{ const o=document.createElement('option'); o.value=k; o.textContent=v; if(k===mode)o.selected=true; m.appendChild(o); });
+  m.onchange=e=>{ mode=e.target.value; if(eraIdx!==1){eraIdx=1;p=0;enter=0;syncChips();} };
+  const s=document.getElementById('selSpeed'); s.innerHTML='';
+  Object.entries(T().speeds).forEach(([k,v])=>{ const o=document.createElement('option'); o.value=k; o.textContent=v; if(+k===speed)o.selected=true; s.appendChild(o); });
+  s.onchange=e=>{ speed=+e.target.value; };
+}
+function buildLegend(){ const host=document.getElementById('legend'); host.innerHTML='';
+  LEGEND.forEach(l=>{ const d=document.createElement('div'); d.className='li';
+    d.innerHTML=`<span class="${l.t==='ln'?'ln':'sq'}" style="${l.t==='ln'?'border-top-color:'+l.c:'background:'+l.c}"></span><span>${l[lang]}</span>`; host.appendChild(d); }); }
+function applyI18n(){
+  document.documentElement.lang = lang==='zh'?'zh-CN':'en';
+  document.querySelectorAll('[data-i]').forEach(el=>{ const k=el.getAttribute('data-i'); if(T()[k]) el.textContent=T()[k]; });
+  document.getElementById('langBtn').textContent = lang==='zh'?'EN':'中文';
+  document.getElementById('btPlay').innerHTML = (paused?'▶ ':'⏸ ')+ (paused?T().play:T().pause);
+  document.getElementById('noteBox').innerHTML = lang==='zh'
+    ? '<b>说明：</b>本动画用 Canvas 复原湍河流域两千余年的水利工程“运行”过程，地理坐标与本项目 GIS 数据一致（WGS-84）。'
+      +'四个阶段自动循环：春秋楚堰 → 西汉六门堤灌溉系统（可切换丰水/枯水）→ 晋明鼎盛与衰废 → 现代引丹与南水北调（含湍河渡槽）。'
+      +'历史工程位置为史料推定，仅供演示。'
+    : '<b>Note:</b> This Canvas animation reconstructs 2,000+ years of the Tuan basin’s water systems "running", with geography consistent with the project GIS (WGS-84). '
+      +'Four stages auto-loop: Chu Weir (Spring & Autumn) → the Han Six-Gate irrigation system (toggle flood/drought) → Jin–Ming peak & decline → modern Yindan & South-to-North transfer (incl. the Tuanhe Aqueduct). '
+      +'Historical positions are inferred from texts, for illustration.';
+  buildChips(); buildSelects(); buildLegend();
+}
+document.getElementById('langBtn').onclick=()=>{ lang=lang==='zh'?'en':'zh'; applyI18n(); };
+document.getElementById('btPlay').onclick=()=>{ paused=!paused; applyI18n(); };
+document.getElementById('btReplay').onclick=()=>{ p=0; enter=0; };
+
+/* ---------- Boot ---------- */
+applyI18n();
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
