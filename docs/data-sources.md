@@ -16,6 +16,7 @@ This dataset combines three kinds of source: **administrative boundaries** (geoB
 | `osm-reservoir-surfaces.geojson` | OpenStreetMap (Overpass) | ODbL 1.0 |
 | `hydraulic-structures.geojson` | 本项目编纂 / compiled here (see §3) | CC BY-SA 4.0 |
 | `places.geojson` | OSM 现名 + 历史地名人工考订 / OSM names + compiled historical names | ODbL (names) + CC BY-SA 4.0 (hist.) |
+| `historical-channels.geojson` | 据《水经注》《晋书》《清史稿》及新野县志考订 / compiled from gazetteers & histories | CC BY-SA 4.0 |
 | `sources/overpass-water.json`, `sources/osm-places.json` | OpenStreetMap (Overpass), trimmed | ODbL 1.0 |
 
 坐标系 / CRS：**WGS-84 (EPSG:4326)**。OSM 瓦片与矢量均为 WGS-84，与底图无 GCJ-02 偏移。

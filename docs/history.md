@@ -48,6 +48,21 @@
 
 ---
 
+## 六、湍河河道变迁 · Channel migration of the Tuan
+
+<p align="center"><img src="../assets/channels.png" alt="湍河河道变迁 / channel migration" width="760"></p>
+
+**中文.** 湍河上中游受地形约束（北高南低，自内乡经邓州城北折东南），河道大体稳定；历史上的“变道”主要发生在两处：
+
+1. **人为改道（汉—明）**：前34年召信臣筑六门堰断湍水，下结二十九陂；晋杜预复六门陂后“诸陂散流，咸入朝水（今刁河）”——湍河之水经总干渠与陂塘网**跨流域分入刁河**，是历史上最大的人为水系改变，约明末淤废。
+2. **下游汇流口随白河改道而迁移（元—今）**：白河在新野岗头两次大改道——**元大德七年（1304）决口夺潦河**成今白河；**明隆庆四年（1570）“清水由岗头徙而西”**，东侧遗长约二十里的**老白河**故道。据《清史稿·地理志》，其间湍河“合（新野）城东北”注入偏东的白河；1570 年白河西徙后，湍河汇流口随之西移，今于城郊乡**湍口村**入白河（下游旧称“七里河”）。
+
+地图上的 `湍河历史河道` 图层据此用四类线表示——*古湍水道（推定）、汉六门引水、老白河/古汇流（故道）、现行河口*——并随时间轴切换；古河道几何为考订示意（OSM 无现成线）。
+
+**English.** The upper–middle Tuan is terrain-controlled and broadly stable; its historical "course changes" are concentrated in two places: (1) an **engineered avulsion (Han–Ming)** — Shao Xinchen's Six-Gate Weir (34 BCE) and Du Yu's restoration sent Tuan water **cross-basin into the Diao** ("the ponds dispersed their flow, all entering the Chao"), the largest man-made change, silted by the late Ming; and (2) **migration of the lower confluence with the Bai (Yuan–today)** — the Bai avulsed twice at Gangtou: the **1304 capture of the Liao River** (forming the modern Bai) and the **1570 westward shift** (leaving the ~20-li **Old Bai**). The History of Qing records the Tuan joining the Bai *northeast of Xinye* during this period; after 1570 the mouth moved west to today's **Tuankou** village. The map's `Historical river courses` layer shows these as four line types, switched by the time slider; the relict-channel geometry is a sourced reconstruction (no OSM line exists).
+
+主要来源 / sources：《水经注·湍水/淯水》；《晋书·杜预传》；新野县志；《清史稿·地理志》；百度百科·湍河 / 白河。
+
 ## 存疑 · Uncertainties
 
 1. **建坝年代 / Founding year** — 史载六门堰始建为“建昭五年=前 34 年”；前 38 年只是建昭元年。本系统取 **−34**。 / All sources give 34 BCE; 38 BCE is merely the start of the reign-era. We use **−34**.

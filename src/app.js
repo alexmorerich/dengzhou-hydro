@@ -101,6 +101,15 @@ function addFeature(feature, def) {
   if (def.kind === "place") {
     layer = L.geoJSON(feature, { pointToLayer: placeMarker }).getLayers()[0];
     center = [geom.coordinates[1], geom.coordinates[0]];
+  } else if (def.kind === "histchannel") {
+    if (geom.type === "Point") {
+      layer = L.geoJSON(feature, { pointToLayer: eventMarker }).getLayers()[0];
+      center = [geom.coordinates[1], geom.coordinates[0]];
+    } else {
+      layer = L.geoJSON(feature, { style: channelStyle }).getLayers()[0];
+      const c = layer.getBounds().getCenter();
+      center = [c.lat, c.lng];
+    }
   } else if (def.kind === "point" || geom.type === "Point") {
     layer = L.geoJSON(feature, { pointToLayer: pointToLayer }).getLayers()[0];
     center = [geom.coordinates[1], geom.coordinates[0]];
@@ -149,7 +158,7 @@ function addFeature(feature, def) {
     category: props.category || def.kind,
     center,
     search: `${props.name_zh || ""} ${props.name_en || ""} ${props.name_hist_zh || ""}`.toLowerCase(),
-    inList: def.kind === "point" || def.kind === "reservoir" || def.kind === "canal",
+    inList: def.kind === "point" || def.kind === "reservoir" || def.kind === "canal" || def.kind === "histchannel",
     isPlace,
     minMarker: ps ? ps.minMarker : 0,
     minLabel: ps ? ps.minLabel : 0,
@@ -165,6 +174,14 @@ function riverStyle(feature) {
 function canalStyle(feature) {
   const c = feature.properties.category === "diversion" ? VECTOR_STYLE.diversion : VECTOR_STYLE.canal;
   return Object.assign({ pane: "p_canal" }, c);
+}
+
+function channelStyle(feature) {
+  const c = CHANNEL_STYLE[feature.properties.chan] || CHANNEL_STYLE.paleo;
+  return Object.assign({ pane: "p_canal" }, c);
+}
+function eventMarker(feature, latlng) {
+  return L.circleMarker(latlng, { pane: "p_point", radius: 6, color: "#fff", weight: 1.6, fillColor: CHANNEL_STYLE.event.color, fillOpacity: 0.95 });
 }
 
 function pointToLayer(feature, latlng) {
@@ -347,6 +364,12 @@ function buildLegend() {
     { cls: "poly", style: `background:${VECTOR_STYLE.reservoir.fillColor};opacity:.6`, zh: "水库水面", en: "Reservoir surface" },
   ];
   lines.forEach((l) => host.appendChild(legendRow(l.cls, l.style, l[state.lang])));
+  // Historical river-course migration
+  if (records.some((r) => r.kind === "histchannel")) {
+    host.appendChild(legendRow("line", `border-top-color:${CHANNEL_STYLE.paleo.color};border-top-style:dashed`, state.lang === "zh" ? "故道 / 老河道" : "Former channel"));
+    host.appendChild(legendRow("line", `border-top-color:${CHANNEL_STYLE.diversion.color};border-top-style:dashed`, state.lang === "zh" ? "人工引水改道" : "Engineered diversion"));
+    host.appendChild(legendRow("", `background:${CHANNEL_STYLE.event.color}`, state.lang === "zh" ? "改道事件" : "Avulsion event"));
+  }
   // Place levels (towns & villages)
   if (records.some((r) => r.isPlace)) {
     [["seat", "县城", "County seat"], ["town", "乡镇", "Township"], ["village", "村", "Village"]].forEach(([lv, zh, en]) =>

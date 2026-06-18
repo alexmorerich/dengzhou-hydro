@@ -115,6 +115,7 @@
 | `admin-boundaries.geojson` | 面 | 邓州、内乡、新野三县界（geoBoundaries） |
 | `rivers.geojson` | 线 | 湍河、刁河、赵河、白河、唐白河、严陵河等水系，**含古今名称**（湍河/湍水…）（OSM + 考订） |
 | `canals.geojson` | 线 | 南水北调中线总干渠、引丹渠、清泉沟隧洞、腰兴渠（OSM） |
+| `historical-channels.geojson` | 线/点 | **湍河历史河道变迁**：古湍水道、汉六门引水入刁河、老白河（1570 前）、古今汇流口、岗头改道点（考订；随时间轴显示） |
 | `osm-reservoir-surfaces.geojson` | 面 | 张沟、王营、滕庄等水库水面（OSM） |
 | `places.geojson` | 点 | **县城·乡镇·村共 127 处**，含古今地名（穰东镇/涅阳…）；按缩放分级显示（OSM 现名 + 人工考订古名） |
 | `hydraulic-structures.geojson` | 点 | 历代水利设施与史迹（六门堤、围堰、各水库、渡槽、橡胶坝…） |
@@ -271,6 +272,7 @@ All vector data is **GeoJSON (WGS-84 / EPSG:4326)** under [`data/`](data/):
 | `admin-boundaries.geojson` | Polygon | Dengzhou, Neixiang, Xinye county boundaries (geoBoundaries) |
 | `rivers.geojson` | LineString | The Tuan, Diao, Zhao, Bai, Tangbai, Yanling rivers **with current + historical names** (Tuan/Tuanshui…) (OSM + compiled) |
 | `canals.geojson` | (Multi)LineString | S-to-N main canal, Yindan canal, Qingquangou tunnel, Yaoxing canal (OSM) |
+| `historical-channels.geojson` | Line / Point | **Tuan channel migration**: ancient course, Han diversion into the Diao, Old Bai (pre-1570), old & modern confluences, Gangtou avulsion node (compiled; time-filtered) |
 | `osm-reservoir-surfaces.geojson` | Polygon | Zhanggou, Wangying, Tengzhuang reservoir surfaces (OSM) |
 | `places.geojson` | Point | **127 county seats, townships & villages** with current + ancient names (Rangdong/Nieyang…); zoom-tiered labels (OSM names + compiled historical names) |
 | `hydraulic-structures.geojson` | Point | Works & sites through the ages (Six-Gate Weir, cofferdams, reservoirs, aqueduct, rubber dams…) |

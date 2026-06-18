@@ -72,6 +72,15 @@ const VECTOR_STYLE = {
   admin:      { color: "#555", weight: 1.6, opacity: 0.8, dashArray: "5 5", fill: true, fillColor: "#888", fillOpacity: 0.03 },
 };
 
+/* Historical channel migration styling, keyed by the feature's `chan` subtype. */
+const CHANNEL_STYLE = {
+  ancient:   { color: "#b08d57", weight: 2.6, opacity: 0.8, dashArray: "2 6" },  // schematic pre-1304 course
+  paleo:     { color: "#a9743b", weight: 3.4, opacity: 0.9, dashArray: "9 5" },  // former channel (老白河 / 古汇流)
+  diversion: { color: "#8e5ea2", weight: 3.0, opacity: 0.9, dashArray: "10 4" }, // engineered (六门→刁河)
+  modern:    { color: "#1f6feb", weight: 3.6, opacity: 0.95 },                    // present course
+  event:     { color: "#c0392b" },                                               // avulsion node (point)
+};
+
 /* -----------------------------------------------------------------------------
  * Layer manifest. The app fetches each `file`, builds a Leaflet layer of the
  * given `kind`, and registers a toggle in the sidebar. Files that 404 are
@@ -81,6 +90,7 @@ const LAYERS = [
   { id: "admin",      kind: "admin",     file: "data/admin-boundaries.geojson",      zh: "行政区界",         en: "County boundaries", on: true,  z: 200 },
   { id: "rivers",     kind: "river",     file: "data/rivers.geojson",                zh: "河流水系",         en: "Rivers & streams",  on: true,  z: 300 },
   { id: "canals",     kind: "canal",     file: "data/canals.geojson",                zh: "灌渠 / 调水工程",  en: "Canals & transfers",on: true,  z: 320 },
+  { id: "histchan",   kind: "histchannel",file: "data/historical-channels.geojson",   zh: "湍河历史河道 / 变迁", en: "Historical river courses", on: true, z: 332 },
   { id: "resSurface", kind: "reservoir", file: "data/osm-reservoir-surfaces.geojson",zh: "水库水面",         en: "Reservoir surfaces",on: true,  z: 350 },
   { id: "places",     kind: "place",     file: "data/places.geojson",                zh: "城邑·乡镇·村",     en: "Towns & villages",  on: true,  z: 500 },
   { id: "structures", kind: "point",     file: "data/hydraulic-structures.geojson",  zh: "水利设施 / 史迹",  en: "Hydraulic works",   on: true,  z: 600 },

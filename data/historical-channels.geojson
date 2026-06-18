@@ -1,0 +1,97 @@
+{
+ "type": "FeatureCollection",
+ "name": "historical-channels",
+ "_comment": "湍河下游及白河汇流口的历史河道变迁 / Historical channel migration of the lower Tuan and its Bai-River confluence. Lower-reach change is driven by the Bai's documented avulsions at Gangtou (元大德七年 1304 夺潦河; 明隆庆四年 1570 徙西，遗老白河). Confluence position from 《清史稿·地理志》(湍水会白河于新野城东北). Han–Ming engineered redistribution (六门陂→朝水/刁河) from 《水经注》《晋书·杜预传》. Old-channel geometry is reconstructed (no OSM line exists); see `confidence`. Sources in each feature.",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "chan-ancient",
+    "name_zh": "古湍水下游·入淯水口（先秦—元，推定）",
+    "name_en": "Ancient lower Tuan & paleo-confluence (pre-1304, schematic)",
+    "chan": "ancient", "era_start": -770, "era_end": 1304,
+    "era_label_zh": "先秦—唐宋", "era_label_en": "Pre-Qin – Song",
+    "description_zh": "湍水（古湍河）上中游受地形约束，自内乡经邓州城北折东南，与今大体一致；其下游入淯水（白河）之口在元代岗头夺潦河之前另在偏东处。此段为示意推定，仅供参考。",
+    "description_en": "The upper-middle Tuan, terrain-controlled, ran much as today (Neixiang → north of Dengzhou → SE). Before the Bai's 1304 capture of the Liao River at Gangtou, the Tuan met the Yu (Bai) further east. This reach is a schematic reconstruction only.",
+    "confidence": "low",
+    "source": "《水经注·湍水/淯水》；河道推定", "source_url": "https://zh.wikipedia.org/wiki/湍河"
+   },
+   "geometry": { "type": "LineString", "coordinates": [[112.265,32.684],[112.35,32.62],[112.45,32.585],[112.52,32.55]] }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "chan-han-diversion",
+    "name_zh": "汉—明·六门陂引湍入朝水（刁河）",
+    "name_en": "Han–Ming engineered diversion: Tuan → Chao (Diao) via the Six-Gate ponds",
+    "chan": "diversion", "era_start": -34, "era_end": 1644,
+    "era_label_zh": "西汉—明", "era_label_en": "Western Han – Ming",
+    "description_zh": "人工“变道”：召信臣于前34年筑六门堰断湍水，下结二十九陂；晋杜预复六门陂，“诸陂散流，咸入朝水（今刁河）”。湍河之水经总干渠与陂塘网跨流域分入刁河，是历史上最大的人为水系改变，约明末淤废。",
+    "description_en": "An engineered avulsion: Shao Xinchen dammed the Tuan in 34 BCE (Six-Gate Weir) feeding 29 ponds; Du Yu (Jin) restored it so 'the ponds dispersed their flow, all entering the Chao (today's Diao)'. Tuan water was carried cross-basin into the Diao via the trunk canal and pond network — the largest historical man-made change to the drainage; silted up by the late Ming.",
+    "confidence": "medium",
+    "source": "《水经注·湍水》；《晋书·杜预传》", "source_url": "https://zh.wikipedia.org/wiki/召信臣"
+   },
+   "geometry": { "type": "LineString", "coordinates": [[112.00,32.73],[112.06,32.65],[112.13,32.56],[112.19,32.47],[112.25,32.43]] }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "chan-laobaihe",
+    "name_zh": "老白河（白河故道，元1304—明1570）",
+    "name_en": "Old Bai River (former channel, 1304–1570)",
+    "chan": "paleo", "era_start": 1304, "era_end": 1570,
+    "era_label_zh": "元—明", "era_label_en": "Yuan – Ming",
+    "description_zh": "元大德七年（1304）白河于岗头决口夺潦河，成今白河雏形；此后至明隆庆四年（1570）白河走偏东一线。1570年“清水由岗头徙而西”，此东侧河道遂废，新野东境留长约二十里（余）的故道，俗称老白河。湍河此期即汇入这条偏东的白河。",
+    "description_en": "After the Bai captured the Liao River at Gangtou in 1304, it ran along this eastern line until 1570, when 'the clear water shifted west from Gangtou', abandoning this channel — the ~20-li 'Old Bai' relict on Xinye's east. The Tuan joined this eastern Bai during 1304–1570.",
+    "confidence": "medium",
+    "source": "新野县志；《清史稿·地理志》", "source_url": "https://zh.wikipedia.org/wiki/白河_(南阳)"
+   },
+   "geometry": { "type": "LineString", "coordinates": [[112.50,32.92],[112.55,32.80],[112.58,32.66],[112.56,32.55],[112.50,32.45],[112.45,32.37]] }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "chan-old-confluence",
+    "name_zh": "湍入白河·古汇流口（新野城东北，元—明）",
+    "name_en": "Old Tuan–Bai confluence (NE of Xinye, 1304–1570)",
+    "chan": "paleo", "era_start": 1304, "era_end": 1570,
+    "era_label_zh": "元—明", "era_label_en": "Yuan – Ming",
+    "description_zh": "《清史稿·地理志》：白河“迳岗头镇……会湍水，合（新野）城东北，又西南，右纳刁河”。即此期湍河在新野城东北汇入（偏东的）白河，较今汇流口偏东北。",
+    "description_en": "Per the History of Qing: the Bai 'passes Gangtou … meets the Tuan northeast of [Xinye] city, then SW, taking in the Diao on the right.' The Tuan then joined the (eastern) Bai NE of Xinye — north-east of today's confluence.",
+    "confidence": "medium",
+    "source": "《清史稿·地理志》", "source_url": "https://zh.wikipedia.org/wiki/湍河"
+   },
+   "geometry": { "type": "LineString", "coordinates": [[112.265,32.684],[112.34,32.64],[112.42,32.61],[112.47,32.60]] }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "chan-modern",
+    "name_zh": "现行湍河入白河口（湍口村，明1570—今）",
+    "name_en": "Modern Tuan–Bai confluence (Tuankou, since 1570)",
+    "chan": "modern", "era_start": 1570, "era_end": 2026,
+    "era_label_zh": "明—今", "era_label_en": "Ming – present",
+    "description_zh": "1570年白河西徙后，湍河汇流口随之西移；今湍河经王集镇大韩营村、于新野城郊乡湍口村注入白河。湍河下游一段旧称“七里河”。",
+    "description_en": "After the Bai shifted west in 1570 the confluence moved west; today the Tuan passes Dahanying (Wangji) and empties into the Bai at Tuankou village (Chengjiao, Xinye). The lower Tuan was historically also called the 'Qili River'.",
+    "confidence": "high",
+    "source": "百度百科·湍河；新野县志", "source_url": "https://baike.baidu.com/item/湍河/10310200"
+   },
+   "geometry": { "type": "LineString", "coordinates": [[112.265,32.684],[112.31,32.60],[112.34,32.53],[112.352,32.487]] }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "chan-event-gangtou",
+    "name_zh": "岗头改道点（元1304夺潦河 · 明1570徙西）",
+    "name_en": "Gangtou avulsion node (1304 capture; 1570 westward shift)",
+    "chan": "event", "era_start": 1304, "era_end": 2026,
+    "era_label_zh": "元—明", "era_label_en": "Yuan – Ming",
+    "description_zh": "岗头（今潦河镇一带）是白河两次大改道的枢纽：元大德七年（1304）决口夺潦河形成今白河；明隆庆四年（1570）由岗头徙西，遗老白河。两次改道直接改变了湍河的入河口位置。",
+    "description_en": "Gangtou (near today's Liaohe town) was the hinge of the Bai's two great avulsions: the 1304 capture of the Liao River (forming the modern Bai) and the 1570 westward shift (leaving the Old Bai). Both moved the Tuan's mouth.",
+    "confidence": "high",
+    "source": "新野县志；《清史稿·地理志》", "source_url": "https://baike.baidu.com/item/白河/6008108"
+   },
+   "geometry": { "type": "Point", "coordinates": [112.46,32.905] }
+  }
+ ]
+}
