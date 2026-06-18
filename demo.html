@@ -120,6 +120,8 @@ const DIAO = [[111.66,32.92],[111.80,32.81],[111.92,32.70],[112.04,32.58],[112.1
 const BAI  = [[112.52,32.96],[112.47,32.80],[112.42,32.66],[112.38,32.52],[112.34,32.42],[112.33,32.40]];
 // tributaries (left-bank of the Tuan, + eastern Tang R.)
 const ZHAO    = [[112.42,32.96],[112.33,32.88],[112.25,32.79],[112.17,32.71],[112.10,32.66]]; // 赵河(古涅水) → 湍河
+// 涅水故道（春秋—汉）：流经涅阳故城之南；“涅阳”即涅水之北（水北为阳）。示意推定。
+const NIESHUI_OLD = [[112.41,32.91],[112.34,32.83],[112.28,32.795],[112.20,32.72],[112.12,32.66]];
 const YANLING = [[111.98,32.96],[112.05,32.85],[112.12,32.77],[112.17,32.71]];                 // 严陵河 → 赵河/湍河
 const MO      = [[111.90,33.07],[111.93,32.96],[111.96,32.86],[111.99,32.78]];                 // 默河 → 湍河 (内乡)
 const TANG    = [[112.62,32.84],[112.55,32.63],[112.50,32.47],[112.46,32.36]];                 // 唐河 (东缘)
@@ -131,7 +133,7 @@ const CITIES = [
   { lon:112.09, lat:32.68, major:true,  show:ALLERA, zh:'穰县', en:'Rang',     sub_zh:'今邓州市区', sub_en:'Dengzhou' },
   { lon:111.85, lat:33.05, major:true,  show:ALLERA, zh:'内乡', en:'Neixiang', sub_zh:'今内乡县',   sub_en:'Neixiang' },
   { lon:112.36, lat:32.52, major:true,  show:ALLERA, zh:'新野', en:'Xinye',    sub_zh:'今新野县',   sub_en:'Xinye' },
-  { lon:112.27, lat:32.85, major:false, show:IMP, zh:'涅阳', en:'Nieyang',  sub_zh:'今穰东镇',     sub_en:'Rangdong' },
+  { lon:112.27, lat:32.87, major:false, show:IMP, zh:'涅阳', en:'Nieyang',  sub_zh:'今穰东镇·涅水之北', sub_en:'Rangdong (N. of Nieshui)' },
   { lon:112.18, lat:32.80, major:false, show:IMP, zh:'冠军', en:'Guanjun',  sub_zh:'今张村镇',     sub_en:'Zhangcun' },
   { lon:112.20, lat:32.72, major:false, show:IMP, zh:'安众', en:'Anzhong',  sub_zh:'今邓州东北',   sub_en:'NE Dengzhou' },
   { lon:112.31, lat:32.61, major:false, show:IMP, zh:'朝阳', en:'Zhaoyang', sub_zh:'今小杨营',     sub_en:'Xiaoyangying' },
@@ -148,7 +150,7 @@ const MOUNTS = [
 /* Han Six-Gate system */
 const DIKE = { lon:111.99, lat:32.74 };                 // 六门堤 on the Tuan, NW of 穰城
 const C_MAIN = [[111.99,32.74],[112.04,32.715],[112.09,32.685]];          // 主干渠 → 穰城
-const C_N    = [[112.09,32.685],[112.15,32.74],[112.21,32.80],[112.27,32.85]]; // 北支 → 涅阳
+const C_N    = [[112.09,32.685],[112.15,32.74],[112.21,32.80],[112.27,32.87]]; // 北支 → 涅阳
 const C_S    = [[112.09,32.685],[112.12,32.58],[112.15,32.48],[112.22,32.47],[112.30,32.50],[112.36,32.52]]; // 南支 → 山都/新野
 const C_NW   = [[111.99,32.74],[112.06,32.79],[112.13,32.805],[112.18,32.80]]; // 北冠军渠 → 冠军
 const C_SPILL= [[111.99,32.74],[111.93,32.80],[111.86,32.87],[111.80,32.93]]; // 分洪渠
@@ -160,7 +162,7 @@ const PONDS_EXTRA = [ // added at Jin–Ming peak (29→38 陂)
   {lon:112.16,lat:32.71},{lon:112.06,lat:32.62},{lon:111.95,lat:32.70}];
 const FIELDS = [
   {lon:112.09,lat:32.66, rl:0.055,rt:0.035, on:0.66, zh:'穰县灌区',en:'Rang fields'},
-  {lon:112.27,lat:32.83, rl:0.045,rt:0.028, on:0.74, zh:'涅阳灌区',en:'Nieyang fields'},
+  {lon:112.27,lat:32.84, rl:0.045,rt:0.028, on:0.74, zh:'涅阳灌区',en:'Nieyang fields'},
   {lon:112.34,lat:32.53, rl:0.06, rt:0.035, on:0.80, zh:'新野灌区',en:'Xinye fields'},
   {lon:112.15,lat:32.46, rl:0.04, rt:0.026, on:0.78, zh:'山都灌区',en:'Shandu fields'},
   {lon:112.17,lat:32.79, rl:0.04, rt:0.024, on:0.70, zh:'冠军灌区',en:'Guanjun fields'},
@@ -323,8 +325,20 @@ function field(f,wet,alpha=1){ const p=G(f.lon,f.lat); const rx=f.rl/(LON1-LON0)
   ctx.restore(); ctx.restore();
   if(wet>0.12) txtS(L(f),p.x,p.y,10.5,'#255022'); }
 
+/* 涅水故道（春秋—汉）——流经涅阳故城之南，涅阳即“涅水之北” / Nieshui old course (Chu & Han eras) */
+function drawNieshuiOld(a){
+  const P=pts(NIESHUI_OLD);
+  ctx.save(); ctx.globalAlpha=a*0.92;
+  strokePts(P, 6, '#9a6d2c', [3,5]);   // sepia dashed bank (former channel)
+  strokePts(P, 2.6, '#7fb0dd', [3,5]); // faint ancient water
+  ctx.restore();
+  const mp=pathPt(P,0.5);
+  txtS(lang==='zh'?'涅水故道（春秋—汉）':'Nieshui R. — old course', mp.x, mp.y+13, 10.5, '#7a4a10','center');
+}
+
 /* ---------- Era: Chu Weir (Spring & Autumn) ---------- */
 function eraChu(prog,a){
+  drawNieshuiOld(a);
   const c=G(CHU.lon,CHU.lat);
   // stepped impoundments (八重) descending SE along the slope
   const steps=8, fillAll=clamp(prog/0.55,0,1);
@@ -364,6 +378,7 @@ function dike(open,a){
 function eraHan(prog,a, peak){
   const ws = mode==='flood'?1.4:mode==='dry'?0.55:1.0;
   const open=gateOpen(prog);
+  drawNieshuiOld(a);
   // canal beds + water
   const mainG=clamp((prog-0.12)/0.18,0,1), nG=clamp((prog-0.40)/0.18,0,1),
         sG=clamp((prog-0.46)/0.20,0,1), nwG=clamp((prog-0.34)/0.18,0,1);
